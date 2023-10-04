@@ -6,11 +6,200 @@
         <meta name="viewport"
             content="width=device-width, initial-scale=1.0" />
         <title>Documentation</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+            }
+
+            pre {
+                width: 300px;
+                overflow: auto;
+                text-wrap: wrap;
+            }
+
+            table {
+                font-family: Arial, sans-serif;
+                border-collapse: collapse;
+                width: 90vw;
+            }
+
+            th,
+            td {
+                border: 1px solid #dddddd;
+                text-align: left;
+                padding: 8px;
+            }
+
+            th {
+                background-color: #f2f2f2;
+            }
+        </style>
     </head>
 
     <body>
-        <h1>Movie API doc</h1>
-        <p>A MERN-stack application with a REST API that interfaces with a database that stores data about different movies.</p>
+        <h1>Movie API doc 📼</h1>
+        <p>A MERN-stack application with a REST API that interfaces with a database that stores data about different
+            movies.</p>
+        <table>
+            <tr>
+                <th>Endpoint</th>
+                <th>HTTP Method</th>
+                <th>Description</th>
+                <th>Request Body</th>
+                <th>Response Body</th>
+            </tr>
+            <tr>
+                <td>/movies</td>
+                <td>GET</td>
+                <td>Return a list of ALL movies to the user.</td>
+                <td>None.</td>
+                <td>A JSON Object containing data about all of the movies.</td>
+            </tr>
+            <tr>
+                <td>/movies/{title}</td>
+                <td>GET</td>
+                <td>Return data (description, genre, director, image URL, whether it’s featured or not) about a single
+                    movie by title to the user.</td>
+                <td>None.</td>
+                <td>A JSON Object containing data about a single movie. Example: <br>
+                    <pre>
+    {
+        id: 1,
+        title: 'The Shawshank Redemption',
+        genre: 'Drama',
+        director: {
+            name: 'Frank Darabont',
+            bio: 'Frank Darabont was born in a refugee camp in 1959 in Montbeliard, France. His parents, Hungarian refugees, had fled Budapest during the failed 1956 Hungarian revolution against communism. ...',
+            birth: '1959-01-28',
+            death: null
+        }
+    }
+                    </pre>
+                </td>
+            </tr>
+            <tr>
+                <td>/genres/{name}</td>
+                <td>GET</td>
+                <td>Return data about a genre by name.</td>
+                <td>None.</td>
+                <td>Text containing a short description of a given genre.</td>
+            </tr>
+            <tr>
+                <td>/directors/{name}</td>
+                <td>GET</td>
+                <td>Return data about a director (bio, birth year, death year) by name.</td>
+                <td>None.</td>
+                <td>A JSON Object containing data for a single director: Example: <br>
+                    <pre>
+    {
+        name: 'Frank Darabont',
+        bio: 'Frank Darabont was born in a refugee camp in 1959 in Montbeliard, France. His parents, Hungarian refugees, had fled Budapest during the failed 1956 Hungarian revolution against communism. ...',
+        birth: '1959-01-28',
+        death: null
+    }
+                </pre>
+                </td>
+            </tr>
+            <tr>
+                <td>/register</td>
+                <td>GET</td>
+                <td>Return a form to allow new users to register</td>
+                <td>None.</td>
+                <td>A short form for the user to fill out. User is required to input an email address, date of birth,
+                    and display name. They are assigned an id.</td>
+            </tr>
+            <tr>
+                <td>/register</td>
+                <td>POST</td>
+                <td>Submit form to allow new users to register.</td>
+                <td>A JSON Object containing data input by the user: Example: <br>
+                    <pre>
+    {
+        email: 'user@email.com',
+        display: 'xXUser_NameXx',
+        DOB: '1991-03-25',
+    }
+                    </pre>
+                </td>
+                <td>Text letting new user know their account has been successfully created.</td>
+            </tr>
+            <tr>
+                <td>/users/{userId}</td>
+                <td>GET</td>
+                <td>Return a form to allow users to update their user info.</td>
+                <td>None</td>
+                <td>Short form where users can change their email address, display name, or date of birth.</td>
+            </tr>
+            <tr>
+                <td>/users/{userId}</td>
+                <td>PUT</td>
+                <td>Allow users to update their user info.</td>
+                <td>A JSON Object containing data input by the user: Example: <br>
+                    <pre>
+    {
+        email: 'user@newemail.com',
+        display: 'New_User_Name',
+        DOB: '2001-06-22',
+    }
+                    </pre>
+                </td>
+                <td>Text letting the user know that changes to their user info were made successfully.</td>
+            </tr>
+            <tr>
+                <td>/users/{userId}/favorites</td>
+                <td>GET</td>
+                <td>Return a list of the user's favorite movies. </td>
+                <td>None.</td>
+                <td>A JSON Object containing a user's favorites. Example:
+                    <pre>
+    {
+        id: 1,
+        title: 'The Shawshank Redemption',
+        genre: 'Drama',
+        director: {
+            name: 'Frank Darabont',
+            bio: 'Frank Darabont was born in a refugee camp in 1959 in Montbeliard, France. His parents, Hungarian refugees, had fled Budapest during the failed 1956 Hungarian revolution against communism. ...',
+            birth: '1959-01-28',
+            death: null
+        }
+    },
+    {
+        id: 2,
+        title: 'The Godfather',
+        genre: 'Crime',
+        director: {
+            name: 'Francis Ford Coppola',
+            bio: 'Francis Ford Coppola was born in 1939 in Detroit, Michigan, but grew up in a New York suburb in a creative, supportive Italian-American family. ...',
+            birth: '1939-04-07',
+            death: null
+        }
+    }, ...
+                    </pre>
+                </td>
+            </tr>
+            <tr>
+                <td>/users/{userId}/favorites/add</td>
+                <td>POST</td>
+                <td>Allow users to add a movie to their list of favorites.</td>
+                <td>None.</td>
+                <td>Text letting user know movie was added to favorites</td>
+            </tr>
+            <tr>
+                <td>/users/{userId}/favorites/remove</td>
+                <td>DELETE</td>
+                <td>Allow users to remove a movie from their list of favorites.</td>
+                <td>None.</td>
+                <td>Text including message letting user know deletion was successful, and link back to their favorites
+                    page.</td>
+            </tr>
+            <tr>
+                <td>/users/{userId}/deregister</td>
+                <td>DELETE</td>
+                <td>Allow existing users to deregister.</td>
+                <td>None.</td>
+                <td>Text including message letting user know deletion was successful, and link back to home page.</td>
+            </tr>
+        </table>
     </body>
 
 </html>
