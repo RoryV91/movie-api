@@ -19,6 +19,7 @@ let movies = [
         },
         genre: "Science Fiction",
         imageUrl: "https://upload.wikimedia.org/wikipedia/en/9/9b/Blade_Runner_2049_poster.png",
+        featured: true,
 	},
 	{   
         id: 2,
@@ -31,6 +32,7 @@ let movies = [
         },
         genre: "Drama",
         imageUrl: "https://upload.wikimedia.org/wikipedia/en/1/1c/Godfather_ver1.jpg",
+        featured: true,
 	},
 	{   
         id: 3,
@@ -43,6 +45,7 @@ let movies = [
         },
         genre: "Science Fiction",
         imageUrl: "https://upload.wikimedia.org/wikipedia/en/e/e7/Jurassic_Park_poster.jpg",
+        featured: true,
 	},
 	{   
         id: 4,
@@ -55,6 +58,7 @@ let movies = [
         },
         genre: "Science Fiction",
         imageUrl: "https://upload.wikimedia.org/wikipedia/en/c/c1/The_Matrix_Poster.jpg",
+        featured: true,
 	},
 	{   
         id: 5,
@@ -67,6 +71,7 @@ let movies = [
         },
         genre: "Action",
         imageUrl: "https://upload.wikimedia.org/wikipedia/en/1/13/Drive2011Poster.jpg",
+        featured: true,
 	},
 	{   
         id: 6,
@@ -79,6 +84,7 @@ let movies = [
         },
         genre: "Action",
         imageUrl: "https://upload.wikimedia.org/wikipedia/en/6/6c/Heatposter.jpg",
+        featured: true,
 	},
 	{   
         id: 7,
@@ -91,6 +97,7 @@ let movies = [
         },
         genre: "Horror",
         imageUrl: "https://upload.wikimedia.org/wikipedia/en/6/63/Americanpsychoposter.jpg",
+        featured: true,
 	},
 	{   
         id: 8,
@@ -103,6 +110,7 @@ let movies = [
         },
         genre: "Thriller",
         imageUrl: "https://upload.wikimedia.org/wikipedia/en/d/d4/Nightcrawlerfilm.jpg",
+        featured: true,
 	},
 	{   
         id: 9,
@@ -115,6 +123,7 @@ let movies = [
         },
         genre: "Comedy",
         imageUrl: "https://upload.wikimedia.org/wikipedia/en/1/13/Talladega_nights_poster.jpg",
+        featured: true,
 	},
 	{   
         id: 10,
@@ -127,6 +136,7 @@ let movies = [
         },
         genre: "Comedy",
         imageUrl: "https://upload.wikimedia.org/wikipedia/en/d/d6/Tropic_thunder_ver3.jpg",
+        featured: true,
 	},
 ];
 
