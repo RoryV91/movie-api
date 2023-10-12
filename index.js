@@ -60,7 +60,7 @@ app.get("/movies", (req, res) => {
 
 app.get("/movies/:title", (req, res) => {
     res.json(movies.find((movie) => {
-        return movie.title === req.params.title
+        return movie.title.toLowerCase() === req.params.title.toLowerCase();
     }));
 });
 
