@@ -9,44 +9,124 @@ app.use(bodyParser.json());
 
 let movies = [
 	{
+        id: 1,
 		title: "Blade Runner 2049",
-		director: "Denis Villeneuve",
+		director: {
+            name: "Denis Villeneuve",
+            bio: "Denis Villeneuve is a French Canadian film director, writer, and producer.",
+            birth: "1967",
+            death: "N/A",
+        },
+        genre: "Science Fiction",
+        imageUrl: "https://upload.wikimedia.org/wikipedia/en/9/9b/Blade_Runner_2049_poster.png",
 	},
-	{
+	{   
+        id: 2,
 		title: "The Godfather",
-		director: "Francis Ford Coppola",
+		director: {
+            name: "Francis Ford Coppola",
+            bio: "Francis Ford Coppola is an American film director, producer, screenwriter and film composer.",
+            birth: "1939",
+            death: "N/A",
+        },
+        genre: "Drama",
+        imageUrl: "https://upload.wikimedia.org/wikipedia/en/1/1c/Godfather_ver1.jpg",
 	},
-	{
+	{   
+        id: 3,
 		title: "Jurassic Park",
-		director: "Steven Spielberg",
+		director: {
+            name: "Steven Spielberg",
+            bio: "Steven Allan Spielberg is an American film director, producer, and screenwriter.",
+            birth: "1946",
+            death: "N/A",
+        },
+        genre: "Science Fiction",
+        imageUrl: "https://upload.wikimedia.org/wikipedia/en/e/e7/Jurassic_Park_poster.jpg",
 	},
-	{
+	{   
+        id: 4,
 		title: "The Matrix",
-		director: "The Wachowskis",
+		director: {
+            name: "The Wachowskis",
+            bio: "Lana Wachowski and Lilly Wachowski, known together professionally as the Wachowskis, are Polish-American film and television directors, writers and producers.",
+            birth: "1965",
+            death: "N/A",
+        },
+        genre: "Science Fiction",
+        imageUrl: "https://upload.wikimedia.org/wikipedia/en/c/c1/The_Matrix_Poster.jpg",
 	},
-	{
+	{   
+        id: 5,
 		title: "Drive",
-		director: "Nicolas Winding Refn",
+		director: {
+            name: "Nicolas Winding Refn",
+            bio: "Nicolas Winding Refn is a Danish film director, screenwriter and producer.",
+            birth: "1970",
+            death: "N/A",
+        },
+        genre: "Action",
+        imageUrl: "https://upload.wikimedia.org/wikipedia/en/1/13/Drive2011Poster.jpg",
 	},
-	{
+	{   
+        id: 6,
 		title: "Heat",
-		director: "Michael Mann",
+		director: {
+            name: "Michael Mann",
+            bio: "Michael Kenneth Mann is an American film director, screenwriter, and producer of film and television.",
+            birth: "1943",
+            death: "N/A",
+        },
+        genre: "Action",
+        imageUrl: "https://upload.wikimedia.org/wikipedia/en/6/6c/Heatposter.jpg",
 	},
-	{
+	{   
+        id: 7,
 		title: "American Psycho",
-		director: "Mary Harron",
+		director: {
+            name: "Mary Harron",
+            bio: "Mary Harron is a Canadian filmmaker and screenwriter.",
+            birth: "1953",
+            death: "N/A",
+        },
+        genre: "Horror",
+        imageUrl: "https://upload.wikimedia.org/wikipedia/en/6/63/Americanpsychoposter.jpg",
 	},
-	{
+	{   
+        id: 8,
 		title: "Nightcrawler",
-		director: "Dan Gilroy",
+		director: {
+            name: "Dan Gilroy",
+            bio: "Daniel Christopher Gilroy is an American screenwriter and film director.",
+            birth: "1959",
+            death: "N/A",
+        },
+        genre: "Thriller",
+        imageUrl: "https://upload.wikimedia.org/wikipedia/en/d/d4/Nightcrawlerfilm.jpg",
 	},
-	{
+	{   
+        id: 9,
 		title: "Talladega Nights: The Ballad of Ricky Bobby",
-		director: "Adam McKay",
+		director: {
+            name: "Adam McKay",
+            bio: "Adam McKay is an American film director, producer, screenwriter, comedian, and actor.",
+            birth: "1968",
+            death: "N/A",
+        },
+        genre: "Comedy",
+        imageUrl: "https://upload.wikimedia.org/wikipedia/en/1/13/Talladega_nights_poster.jpg",
 	},
-	{
+	{   
+        id: 10,
 		title: "Tropic Thunder",
-		director: "Ben Stiller",
+		director: {
+            name: "Ben Stiller",
+            bio: "Benjamin Edward Meara Stiller is an American actor, comedian, writer, producer, and director.",
+            birth: "1965",
+            death: "N/A",
+        },
+        genre: "Comedy",
+        imageUrl: "https://upload.wikimedia.org/wikipedia/en/d/d6/Tropic_thunder_ver3.jpg",
 	},
 ];
 
