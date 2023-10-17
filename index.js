@@ -11,6 +11,7 @@ let movies = [
 	{
         id: 1,
 		title: "Blade Runner 2049",
+        description: "Blade Runner 2049 is a 2017 American neo-noir science fiction film directed by Denis Villeneuve and written by Hampton Fancher and Michael Green.",
 		director: {
             name: "Denis Villeneuve",
             bio: "Denis Villeneuve is a French Canadian film director, writer, and producer.",
