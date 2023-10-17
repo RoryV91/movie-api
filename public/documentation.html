@@ -64,19 +64,22 @@
                 <td>A JSON Object containing data about a single movie. Example: <br>
                     <pre>
     {
-        id: 1,
+        movieid: 1,
         title: "Blade Runner 2049",
+        description: "Blade Runner 2049 is a 2017 American neo-noir science fiction film directed by Denis Villeneuve and written by Hampton Fancher and Michael Green.",
         director: {
+            directorid: 7,
             name: "Denis Villeneuve",
             bio: "Denis Villeneuve is a French Canadian film director, writer, and producer.",
-            birth: "1967",
-            death: "N/A",
+            birthyear: "1967",
+            deathyear: "N/A",
         },
         genre: {
+            genreid: 9,
             name: "Science Fiction",
             description: "Science fiction is a genre of speculative fiction that typically deals with imaginative and futuristic concepts such as advanced science and technology, space exploration, time travel, parallel universes, and extraterrestrial life.",
         },
-        imageUrl: "https://upload.wikimedia.org/wikipedia/en/9/9b/Blade_Runner_2049_poster.png",
+        imageurl: "https://upload.wikimedia.org/wikipedia/en/9/9b/Blade_Runner_2049_poster.png",
         featured: true
     }
                     </pre>
@@ -97,6 +100,7 @@
                 <td>A JSON Object containing data for a single director: Example: <br>
                     <pre>
     {
+        directorid: 7,
         name: "Denis Villeneuve",
         bio: "Denis Villeneuve is a French Canadian film director, writer, and producer.",
         birth: "1967",
@@ -158,15 +162,18 @@
                 <td>A JSON Object containing a user's favorites. Example:
                     <pre>
     {   
-        id: 3,
+        movieid: 3,
         title: "Jurassic Park",
+        description: "Jurassic Park is a 1993 American science fiction adventure film directed by Steven Spielberg and produced by Kathleen Kennedy and Gerald R. Molen.",
         director: {
+            directorid: 2,
             name: "Steven Spielberg",
             bio: "Steven Allan Spielberg is an American film director, producer, and screenwriter.",
             birth: "1946",
             death: "N/A",
         },
         genre: {
+            genreid: 9,
             name: "Science Fiction",
             description: "Science fiction is a genre of speculative fiction that typically deals with imaginative and futuristic concepts such as advanced science and technology, space exploration, time travel, parallel universes, and extraterrestrial life.",
         },
@@ -174,15 +181,18 @@
         featured: true,
     },
     {   
-        id: 4,
+        movieid: 4,
         title: "The Matrix",
+        description: "The Matrix is a 1999 American science fiction action film written and directed by the Wachowskis, and produced by Joel Silver.",
         director: {
+            directorid: 8,
             name: "The Wachowskis",
             bio: "Lana Wachowski and Lilly Wachowski, known together professionally as the Wachowskis, are Polish-American film and television directors, writers and producers.",
             birth: "1965",
             death: "N/A",
         },
         genre: {
+            genreid: 9,
             name: "Science Fiction",
             description: "Science fiction is a genre of speculative fiction that typically deals with imaginative and futuristic concepts such as advanced science and technology, space exploration, time travel, parallel universes, and extraterrestrial life.",
         },
