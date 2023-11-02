@@ -64,23 +64,31 @@
                 <td>A JSON Object containing data about a single movie. Example: <br>
                     <pre>
     {
-        movieid: 1,
-        title: "Blade Runner 2049",
-        description: "Blade Runner 2049 is a 2017 American neo-noir science fiction film directed by Denis Villeneuve and written by Hampton Fancher and Michael Green.",
-        director: {
-            directorid: 7,
-            name: "Denis Villeneuve",
-            bio: "Denis Villeneuve is a French Canadian film director, writer, and producer.",
-            birthyear: "1967",
-            deathyear: "N/A",
+        "_id": {
+          "$oid": "6541dc686abdf06a6f6bbd80"
         },
-        genre: {
-            genreid: 9,
-            name: "Science Fiction",
-            description: "Science fiction is a genre of speculative fiction that typically deals with imaginative and futuristic concepts such as advanced science and technology, space exploration, time travel, parallel universes, and extraterrestrial life.",
+        "title": "Blade Runner 2049",
+        "description": "Young Blade Runner K's discovery of a long-buried secret leads him to track down former Blade Runner Rick Deckard, who's been missing for thirty years.",
+        "imageurl": "bladerunner2049.png",
+        "featured": true,
+        "actor_ids": [
+          {
+            "$oid": "6541dfbd6abdf06a6f6bbd9a"
+          }
+        ],
+        "release": {
+          "$date": "2017-10-06T07:00:00.000Z"
         },
-        imageurl: "https://upload.wikimedia.org/wikipedia/en/9/9b/Blade_Runner_2049_poster.png",
-        featured: true
+        "director_ids": [
+          {
+            "$oid": "6541da3b6abdf06a6f6bbd53"
+          }
+        ],
+        "genre_ids": [
+          {
+            "$oid": "6541da2b6abdf06a6f6bbd50"
+          }
+        ]
     }
                     </pre>
                 </td>
@@ -97,14 +105,22 @@
                 <td>GET</td>
                 <td>Return data about a director (bio, birth year, death year) by name.</td>
                 <td>None.</td>
-                <td>A JSON Object containing data for a single director: Example: <br>
+                <td>A JSON Object containing data for a single director. Note date format issue. Example: <br>
                     <pre>
     {
-        directorid: 7,
-        name: "Denis Villeneuve",
-        bio: "Denis Villeneuve is a French Canadian film director, writer, and producer.",
-        birth: "1967",
-        death: "N/A",
+        "_id": {
+          "$oid": "6541da3b6abdf06a6f6bbd52"
+        },
+        "name": "Jonathan Demme",
+        "bio": "Robert Jonathan Demme was an American director, producer, and screenwriter.",
+        "birth": {
+          "$date": {
+            "$numberLong": "-816022800000"
+          }
+        },
+        "death": {
+          "$date": "2017-04-26T07:00:00.000Z"
+        }
     }
                 </pre>
                 </td>
@@ -123,13 +139,25 @@
                 <td>Submit form to allow new users to register.</td>
                 <td>A JSON Object containing data input by the user: Example: <br>
                     <pre>
-    {   
-        userid: serial,
-        username: 'xXUser_NameXx',
-        password: 'password',
-        email: 'user@email.com',
-        birth_date: '1991-03-25',
-    }
+    {
+        "_id": {
+          "$oid": "65431a4d6abdf06a6f6bbe19"
+        },
+        "username": "User1",
+        "password": "Password1",
+        "email": "user1@example.com",
+        "dob": {
+          "$date": "1990-01-01T00:00:00.000Z"
+        },
+        "user_movies": [
+          {
+            "$oid": "6541dc686abdf06a6f6bbd80"
+          },
+          {
+            "$oid": "6541dc686abdf06a6f6bbd85"
+          }
+        ]
+      }
                     </pre>
                 </td>
                 <td>Text letting new user know their account has been successfully created.</td>
@@ -163,44 +191,14 @@
                 <td>None.</td>
                 <td>A JSON Object containing a user's favorites. Example:
                     <pre>
-    {   
-        movieid: 3,
-        title: "Jurassic Park",
-        description: "Jurassic Park is a 1993 American science fiction adventure film directed by Steven Spielberg and produced by Kathleen Kennedy and Gerald R. Molen.",
-        director: {
-            directorid: 2,
-            name: "Steven Spielberg",
-            bio: "Steven Allan Spielberg is an American film director, producer, and screenwriter.",
-            birth: "1946",
-            death: "N/A",
+    "user_movies": [
+        {
+            "$oid": "6541dc686abdf06a6f6bbd80"
         },
-        genre: {
-            genreid: 9,
-            name: "Science Fiction",
-            description: "Science fiction is a genre of speculative fiction that typically deals with imaginative and futuristic concepts such as advanced science and technology, space exploration, time travel, parallel universes, and extraterrestrial life.",
-        },
-        imageUrl: "https://upload.wikimedia.org/wikipedia/en/e/e7/Jurassic_Park_poster.jpg",
-        featured: true,
-    },
-    {   
-        movieid: 4,
-        title: "The Matrix",
-        description: "The Matrix is a 1999 American science fiction action film written and directed by the Wachowskis, and produced by Joel Silver.",
-        director: {
-            directorid: 8,
-            name: "The Wachowskis",
-            bio: "Lana Wachowski and Lilly Wachowski, known together professionally as the Wachowskis, are Polish-American film and television directors, writers and producers.",
-            birth: "1965",
-            death: "N/A",
-        },
-        genre: {
-            genreid: 9,
-            name: "Science Fiction",
-            description: "Science fiction is a genre of speculative fiction that typically deals with imaginative and futuristic concepts such as advanced science and technology, space exploration, time travel, parallel universes, and extraterrestrial life.",
-        },
-        imageUrl: "https://upload.wikimedia.org/wikipedia/en/c/c1/The_Matrix_Poster.jpg",
-        featured: true,
-    }, ...
+        {
+            "$oid": "6541dc686abdf06a6f6bbd85"
+        }
+    ]
                     </pre>
                 </td>
             </tr>
