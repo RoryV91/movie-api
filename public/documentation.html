@@ -193,7 +193,21 @@
                 <td>/users/{userId}/favorites/add</td>
                 <td>POST</td>
                 <td>Allow users to add a movie to their list of favorites.</td>
-                <td>None.</td>
+                <td>A JSON object containing data about a single movie. <br>
+                    Note: User may not have all of the data about the movie they want to add, so the request body only requires the title and description. Example:
+                        <pre>
+    {
+        "title": "Jurassic Park",
+        "description": "A pragmatic paleontologist touring an almost complete theme park on an island in Central America is tasked with protecting a couple of kids after a power failure causes the park's cloned dinosaurs to run loose.",
+        "imageurl": "jurassicpark.png",
+        "featured": true,
+        "actor_ids": [],
+        "release": null,
+        "director_ids": [],
+        "genre_ids": []
+    }
+                        </pre>
+                </td>
                 <td>Text letting user know movie was added to favorites</td>
             </tr>
             <tr>
