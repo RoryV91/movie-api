@@ -153,11 +153,29 @@ app.post("/users/:userId/favorites/add", async (req, res) => {
     }
 });
 
-
-app.delete("/users/:userId/favorites/remove", (req, res) => {
-	res.send(
-		"Successful DELETE request removing data from a single user's favorites."
-	);
+app.delete("/users/:userId/favorites/remove", async (req, res) => {
+    try {
+        const userId = req.params.userId;
+        const movieId = req.body.movieId;
+        if (!ObjectId.isValid(movieId)) {
+            return res.status(400).send("Invalid movieId");
+        }
+        const user = await Users.findById(userId);
+        if (!user) {
+            return res.status(404).send("User not found");
+        }
+        const movieIndex = user.user_movie_ids.indexOf(movieId);
+        if (movieIndex !== -1) {
+            user.user_movie_ids.splice(movieIndex, 1);
+            const updatedUser = await user.save();
+            return res.status(200).json(updatedUser);
+        } else {
+            return res.status(400).send("Movie not found in favorites");
+        }
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send("Error removing movie from favorites");
+    }
 });
 
 app.delete("/users/:userId/deregister", (req, res) => {
