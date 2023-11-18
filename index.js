@@ -15,33 +15,52 @@ app.use(morgan("common"));
 app.use(express.static("public"));
 app.use(bodyParser.json());
 
-mongoose.connect("mongodb://localhost:27017/myFlix", { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect("mongodb://localhost:27017/myFlix", {
+	useNewUrlParser: true,
+	useUnifiedTopology: true,
+});
 
 app.get("/", (req, res) => {
 	res.send("This is the root route for the app.");
 });
 
 app.get("/movies", (req, res) => {
-    console.log("GET request for all movies");
-    Movies.find()
-        .then((movies) => {
-            res.json(movies);
-        })
-        .catch((err) => {
-            console.error(err);
-            res.status(500).send("Internal Server Error");
-        });
+	console.log("GET request for all movies");
+	Movies.find()
+		.then((movies) => {
+			res.json(movies);
+		})
+		.catch((err) => {
+			console.error(err);
+			res.status(500).send("Internal Server Error");
+		});
 });
 
 app.get("/movies/:title", (req, res) => {
-    const movieTitle = req.params.title;
+	const movieTitle = req.params.title;
+	Movies.findOne({ title: movieTitle })
+		.then((movie) => {
+			if (!movie) {
+				res.status(404).send("Movie not found");
+			} else {
+				res.json(movie);
+			}
+		})
+		.catch((err) => {
+			console.error(err);
+			res.status(500).send("Internal Server Error");
+		});
+});
 
-    Movies.findOne({ title: movieTitle })
-        .then((movie) => {
-            if (!movie) {
-                res.status(404).send("Movie not found");
+app.get("/genres/:name", (req, res) => {
+    const genreName = req.params.name;
+
+    Genres.findOne({ name: genreName })
+        .then((genre) => {
+            if (!genre) {
+                res.status(404).send("Genre not found");
             } else {
-                res.json(movie);
+                res.json(genre);
             }
         })
         .catch((err) => {
@@ -50,44 +69,47 @@ app.get("/movies/:title", (req, res) => {
         });
 });
 
-app.get("/genres/:name", (req, res) => {
-    res.send("Successful GET request returning data on a single genre.");
-});
 
 app.get("/directors/:name", (req, res) => {
-    res.send("Successful GET request returning data on a single director.");
+	res.send("Successful GET request returning data on a single director.");
 });
 
 app.get("/register", (req, res) => {
-    res.send("Successful GET request returning form to sign up a single user.");
+	res.send("Successful GET request returning form to sign up a single user.");
 });
 
 app.post("/register", (req, res) => {
-    res.send("Successful POST request saving data on a single user.");
+	res.send("Successful POST request saving data on a single user.");
 });
 
 app.get("/users/:userId", (req, res) => {
-    res.send("Successful GET request returning data on a single user.");
+	res.send("Successful GET request returning data on a single user.");
 });
 
 app.put("/users/:userId", (req, res) => {
-    res.send("Successful PUT request updating data on a single user.");
+	res.send("Successful PUT request updating data on a single user.");
 });
 
 app.get("/users/:userId/favorites", (req, res) => {
-    res.send("Successful GET request returning data on a single user's favorites.");
+	res.send(
+		"Successful GET request returning data on a single user's favorites."
+	);
 });
 
 app.post("/users/:userId/favorites/add", (req, res) => {
-    res.send("Successful POST request adding data to a single user's favorites.");
+	res.send("Successful POST request adding data to a single user's favorites.");
 });
 
 app.delete("/users/:userId/favorites/remove", (req, res) => {
-    res.send("Successful DELETE request removing data from a single user's favorites.");
+	res.send(
+		"Successful DELETE request removing data from a single user's favorites."
+	);
 });
 
 app.delete("/users/:userId/deregister", (req, res) => {
-    res.send("Successful DELETE request removing a single user from the database.");
+	res.send(
+		"Successful DELETE request removing a single user from the database."
+	);
 });
 
 app.use((err, req, res, next) => {
