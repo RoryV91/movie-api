@@ -54,7 +54,6 @@ app.get("/movies/:title", (req, res) => {
 
 app.get("/genres/:name", (req, res) => {
     const genreName = req.params.name;
-
     Genres.findOne({ name: genreName })
         .then((genre) => {
             if (!genre) {
@@ -69,10 +68,23 @@ app.get("/genres/:name", (req, res) => {
         });
 });
 
-
 app.get("/directors/:name", (req, res) => {
-	res.send("Successful GET request returning data on a single director.");
+    const directorName = req.params.name;
+
+    Directors.findOne({ name: directorName })
+        .then((director) => {
+            if (!director) {
+                res.status(404).send("Director not found");
+            } else {
+                res.json(director);
+            }
+        })
+        .catch((err) => {
+            console.error(err);
+            res.status(500).send("Internal Server Error");
+        });
 });
+
 
 app.get("/register", (req, res) => {
 	res.send("Successful GET request returning form to sign up a single user.");
