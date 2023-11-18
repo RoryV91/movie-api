@@ -70,7 +70,6 @@ app.get("/genres/:name", (req, res) => {
 
 app.get("/directors/:name", (req, res) => {
     const directorName = req.params.name;
-
     Directors.findOne({ name: directorName })
         .then((director) => {
             if (!director) {
@@ -85,13 +84,19 @@ app.get("/directors/:name", (req, res) => {
         });
 });
 
-
 app.get("/register", (req, res) => {
 	res.send("Successful GET request returning form to sign up a single user.");
 });
 
-app.post("/register", (req, res) => {
-	res.send("Successful POST request saving data on a single user.");
+app.post("/register", async (req, res) => {
+    try {
+        const newUser = req.body;
+        const user = await Users.create(newUser);
+        return res.status(201).json(user);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send("Error creating user");
+    }
 });
 
 app.get("/users/:userId", (req, res) => {
