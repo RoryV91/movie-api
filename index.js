@@ -22,7 +22,15 @@ app.get("/", (req, res) => {
 });
 
 app.get("/movies", (req, res) => {
-	res.json(movies);
+    console.log("GET request for all movies");
+    Movies.find()
+        .then((movies) => {
+            res.json(movies);
+        })
+        .catch((err) => {
+            console.error(err);
+            res.status(500).send("Internal Server Error");
+        });
 });
 
 app.get("/movies/:title", (req, res) => {
