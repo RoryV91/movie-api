@@ -3,7 +3,7 @@ const morgan = require("morgan");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const app = express();
-
+const { ObjectId } = require('mongoose').Types;
 const Models = require("./models.js");
 const Movies = Models.Movie;
 const Users = Models.User;
@@ -103,9 +103,24 @@ app.get("/users/:userId", (req, res) => {
 	res.send("Successful GET request returning data on a single user.");
 });
 
-app.put("/users/:userId", (req, res) => {
-	res.send("Successful PUT request updating data on a single user.");
+app.put("/users/:userId",async (req, res) => {
+        try {
+            const userId = req.params.userId;
+            const updatedInfo = req.body;
+    
+            const updatedUser = await Users.findByIdAndUpdate(userId, updatedInfo, { new: true });
+    
+            if (!updatedUser) {
+                return res.status(404).send("User not found");
+            }
+    
+            return res.status(200).json(updatedUser);
+        } catch (error) {
+            console.error(error);
+            return res.status(500).send("Error updating user");
+        }
 });
+    
 
 app.get("/users/:userId/favorites", (req, res) => {
 	res.send(
@@ -113,9 +128,31 @@ app.get("/users/:userId/favorites", (req, res) => {
 	);
 });
 
-app.post("/users/:userId/favorites/add", (req, res) => {
-	res.send("Successful POST request adding data to a single user's favorites.");
+app.post("/users/:userId/favorites/add", async (req, res) => {
+    try {
+        const userId = req.params.userId;
+        const movieId = req.body.movieId;
+        if (!ObjectId.isValid(movieId)) {
+            return res.status(400).send("Invalid movieId");
+        }
+        const user = await Users.findById(userId);
+
+        if (!user) {
+            return res.status(404).send("User not found");
+        }
+        if (!user.user_movie_ids.includes(movieId)) {
+            user.user_movie_ids.push(movieId);
+            const updatedUser = await user.save();
+            return res.status(200).json(updatedUser);
+        } else {
+            return res.status(400).send("Movie is already in favorites");
+        }
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send("Error adding movie to favorites");
+    }
 });
+
 
 app.delete("/users/:userId/favorites/remove", (req, res) => {
 	res.send(
