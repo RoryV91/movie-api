@@ -34,9 +34,20 @@ app.get("/movies", (req, res) => {
 });
 
 app.get("/movies/:title", (req, res) => {
-    res.json(movies.find((movie) => {
-        return movie.title.toLowerCase() === req.params.title.toLowerCase();
-    }));
+    const movieTitle = req.params.title;
+
+    Movies.findOne({ title: movieTitle })
+        .then((movie) => {
+            if (!movie) {
+                res.status(404).send("Movie not found");
+            } else {
+                res.json(movie);
+            }
+        })
+        .catch((err) => {
+            console.error(err);
+            res.status(500).send("Internal Server Error");
+        });
 });
 
 app.get("/genres/:name", (req, res) => {
