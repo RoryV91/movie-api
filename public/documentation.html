@@ -98,7 +98,17 @@
                 <td>GET</td>
                 <td>Return data about a genre by name.</td>
                 <td>None.</td>
-                <td>Text containing a short description of a given genre.</td>
+                <td>A JSON Object containing data about a single genre. Example: <br>
+                    <pre>
+    {
+        "_id": {
+            "$oid": "6541da2b6abdf06a6f6bbd4b"
+        },
+        "name": "Thriller",
+        "description": "Thriller film, also known as suspense film or suspense thriller, is a broad film genre that involves excitement and suspense in the audience."
+    }
+                    </pre>
+                </td>
             </tr>
             <tr>
                 <td>/directors/{name}</td>
