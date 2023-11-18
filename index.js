@@ -178,11 +178,21 @@ app.delete("/users/:userId/favorites/remove", async (req, res) => {
     }
 });
 
-app.delete("/users/:userId/deregister", (req, res) => {
-	res.send(
-		"Successful DELETE request removing a single user from the database."
-	);
+app.delete("/users/:userId/deregister", async (req, res) => {
+    try {
+        const userId = req.params.userId;
+        const deletedUser = await Users.findByIdAndDelete(userId);
+        if (!deletedUser) {
+            return res.status(404).send("User not found");
+        }
+        return res.status(200).json(deletedUser);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send("Error deleting user");
+    }
 });
+
+
 
 app.use((err, req, res, next) => {
 	console.error(err.stack);
