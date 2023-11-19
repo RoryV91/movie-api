@@ -1,16 +1,26 @@
+// DEPENDENCIES
 const express = require("express");
 const morgan = require("morgan");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const app = express();
 const { ObjectId } = require('mongoose').Types;
+const bcrypt = require('bcrypt'); 
+const auth = require('./auth')(app);
+
+// MODELS
 const Models = require("./models.js");
 const Movies = Models.Movie;
 const Users = Models.User;
 const Directors = Models.Director;
 const Genres = Models.Genre;
 const Actors = Models.Actor;
-let auth = require('./auth')(app);
+
+
+// MIDDLEWARE
+app.use(morgan("common"));
+app.use(express.static("public"));
+app.use(bodyParser.json());
 app.use(morgan("common"));
 app.use(express.static("public"));
 app.use(bodyParser.json());
@@ -19,6 +29,18 @@ mongoose.connect("mongodb://localhost:27017/myFlix", {
 	useNewUrlParser: true,
 	useUnifiedTopology: true,
 });
+
+// USE CORS
+app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
+
+require('./passport');
+
+// ROUTES
+auth(app);
 
 app.get("/", (req, res) => {
 	res.send("This is the root route for the app.");
@@ -124,7 +146,7 @@ app.get("/users/:userId/favorites", (req, res) => {
 	);
 });
 
-app.post("/users/:userId/favorites/add", async (req, res) => {
+app.post("/users/:userId/favorites/add", passport.authenticate('jwt', { session: false }), async (req, res) => {
     try {
         const userId = req.params.userId;
         const movieId = req.body.movieId;

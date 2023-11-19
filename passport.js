@@ -5,7 +5,7 @@ const ExtractJwt = passportJWT.ExtractJwt;
 const JwtStrategy = passportJWT.Strategy;
 const bcrypt = require('bcrypt');
 const Users = require('./models').User;
-const config = require('./config'); 
+const config = require('./config');
 
 passport.use(
   new LocalStrategy(
@@ -54,3 +54,4 @@ passport.use(
     }
   )
 );
+
