@@ -10,7 +10,7 @@ const Users = Models.User;
 const Directors = Models.Director;
 const Genres = Models.Genre;
 const Actors = Models.Actor;
-
+let auth = require('./auth')(app);
 app.use(morgan("common"));
 app.use(express.static("public"));
 app.use(bodyParser.json());
