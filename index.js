@@ -109,6 +109,11 @@ app.get("/directors/:name", (req, res) => {
 app.post("/users/new", async (req, res) => {
     try {
         const newUser = req.body;
+
+        // Hash the password before saving it
+        const hashedPassword = await bcrypt.hash(newUser.password, 10);
+        newUser.password = hashedPassword;
+
         const user = await Users.create(newUser);
         return res.status(201).json(user);
     } catch (error) {
@@ -171,7 +176,7 @@ app.post("/users/:userId/favorites/add", passport.authenticate('jwt', { session:
     }
 });
 
-app.delete("/users/:userId/favorites/remove", async (req, res) => {
+app.delete("/users/:userId/favorites/remove", passport.authenticate('jwt', { session: false }), async (req, res) => {
     try {
         const userId = req.params.userId;
         const movieId = req.body.movieId;
@@ -196,7 +201,7 @@ app.delete("/users/:userId/favorites/remove", async (req, res) => {
     }
 });
 
-app.delete("/users/:userId/delete", async (req, res) => {
+app.delete("/users/:userId/delete", passport.authenticate('jwt', { session: false }), async (req, res) => {
     try {
         const userId = req.params.userId;
         const deletedUser = await Users.findByIdAndDelete(userId);
