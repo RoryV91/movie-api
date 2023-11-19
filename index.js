@@ -84,11 +84,7 @@ app.get("/directors/:name", (req, res) => {
         });
 });
 
-app.get("/register", (req, res) => {
-	res.send("Successful GET request returning form to sign up a single user.");
-});
-
-app.post("/register", async (req, res) => {
+app.post("/users/new", async (req, res) => {
     try {
         const newUser = req.body;
         const user = await Users.create(newUser);
@@ -178,7 +174,7 @@ app.delete("/users/:userId/favorites/remove", async (req, res) => {
     }
 });
 
-app.delete("/users/:userId/deregister", async (req, res) => {
+app.delete("/users/:userId/delete", async (req, res) => {
     try {
         const userId = req.params.userId;
         const deletedUser = await Users.findByIdAndDelete(userId);

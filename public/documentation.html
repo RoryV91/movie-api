@@ -136,15 +136,7 @@
                 </td>
             </tr>
             <tr>
-                <td>/register</td>
-                <td>GET</td>
-                <td>Return a form to allow new users to register</td>
-                <td>None.</td>
-                <td>A short form for the user to fill out. User is required to input an email address, date of birth,
-                    and display name. They are assigned an id.</td>
-            </tr>
-            <tr>
-                <td>/register</td>
+                <td>/users/new</td>
                 <td>POST</td>
                 <td>Submit form to allow new users to register.</td>
                 <td>A JSON Object containing data input by the user: Example: <br>
@@ -229,7 +221,7 @@
                     page.</td>
             </tr>
             <tr>
-                <td>/users/{userId}/deregister</td>
+                <td>/users/{userId}/delete</td>
                 <td>DELETE</td>
                 <td>Allow existing users to deregister.</td>
                 <td>None.</td>
