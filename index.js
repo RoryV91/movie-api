@@ -3,10 +3,11 @@ const express = require("express");
 const morgan = require("morgan");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
+const passport = require('passport');
 const app = express();
 const { ObjectId } = require('mongoose').Types;
 const bcrypt = require('bcrypt'); 
-const auth = require('./auth')(app);
+const auth = require('./auth');
 
 // MODELS
 const Models = require("./models.js");
