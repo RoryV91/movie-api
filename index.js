@@ -126,7 +126,7 @@ app.get("/users/:userId", (req, res) => {
 	res.send("Successful GET request returning data on a single user.");
 });
 
-app.put("/users/:userId",async (req, res) => {
+app.put("/users/:userId", passport.authenticate('jwt', { session: false }), async (req, res) => {
         try {
             const userId = req.params.userId;
             const updatedInfo = req.body;
