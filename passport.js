@@ -8,38 +8,36 @@ const Users = require("./models").User;
 const config = require("./config");
 
 passport.use(
-	new LocalStrategy(
-		{
-			usernameField: "Username",
-			passwordField: "Password",
-		},
-		async (username, password, callback) => {
-			try {
-				const user = await Users.findOne({ Username: username });
-				if (!user) {
-					return callback(null, false, {
-						message: "Incorrect username or password.",
-					});
-				}
-
-				console.log("Stored Hashed Password:", user.password);
-				console.log("Incoming Password:", password);
-
-				const isValidPassword = await bcrypt.compare(password, user.password);
-				if (!isValidPassword) {
-					return callback(null, false, {
-						message: "Incorrect username or password.",
-					});
-				}
-
-				return callback(null, user);
-			} catch (error) {
-				console.error(error);
-				return callback(error);
-			}
-		}
-	)
-);
+    new LocalStrategy(
+      {
+        usernameField: 'username',
+        passwordField: 'password',
+      },
+      async (username, password, done) => {
+        try {
+            console.log("LocalStrategy called");
+          const user = await Users.findOne({ username: username });
+          if (!user) {
+            console.log('User not found');
+            return done(null, false, { message: 'Incorrect username.' });
+          }
+  
+          const isValidPassword = await bcrypt.compare(password, user.password);
+  
+          if (!isValidPassword) {
+            console.log('Incorrect password');
+            return done(null, false, { message: 'Incorrect password.' });
+          }
+  
+          console.log('Correct credentials');
+          return done(null, user);
+        } catch (error) {
+          console.error(error);
+          return done(error);
+        }
+      }
+    )
+  );
 
 passport.use(
 	new JwtStrategy(
@@ -49,7 +47,7 @@ passport.use(
 		},
 		async (jwtPayload, callback) => {
 			try {
-				const user = await Users.findById(jwtPayload.id);
+				const user = await Users.findById( jwtPayload._id );
 				return callback(null, user);
 			} catch (error) {
 				return callback(error);

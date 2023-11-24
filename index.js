@@ -43,12 +43,11 @@ require('./passport');
 // ROUTES
 auth(app);
 
-app.get("/", (req, res) => {
+app.get("/", passport.authenticate('jwt', { session: false }), async (req, res) => {
 	res.send("This is the root route for the app.");
 });
 
-app.get("/movies", (req, res) => {
-	console.log("GET request for all movies");
+app.get("/movies", passport.authenticate('jwt', { session: false }), async (req, res) => {
 	Movies.find()
 		.then((movies) => {
 			res.json(movies);
@@ -59,7 +58,7 @@ app.get("/movies", (req, res) => {
 		});
 });
 
-app.get("/movies/:title", (req, res) => {
+app.get("/movies/:title", passport.authenticate('jwt', { session: false }), async (req, res) => {
 	const movieTitle = req.params.title;
 	Movies.findOne({ title: movieTitle })
 		.then((movie) => {
@@ -75,7 +74,7 @@ app.get("/movies/:title", (req, res) => {
 		});
 });
 
-app.get("/genres/:name", (req, res) => {
+app.get("/genres/:name", passport.authenticate('jwt', { session: false }), async (req, res) => {
     const genreName = req.params.name;
     Genres.findOne({ name: genreName })
         .then((genre) => {
@@ -91,7 +90,7 @@ app.get("/genres/:name", (req, res) => {
         });
 });
 
-app.get("/directors/:name", (req, res) => {
+app.get("/directors/:name", passport.authenticate('jwt', { session: false }), async (req, res) => {
     const directorName = req.params.name;
     Directors.findOne({ name: directorName })
         .then((director) => {
@@ -123,7 +122,7 @@ app.post("/users/new", async (req, res) => {
     }
 });
 
-app.get("/users/:userId", (req, res) => {
+app.get("/users/:userId", passport.authenticate('jwt', { session: false }), async (req, res) => {
 	res.send("Successful GET request returning data on a single user.");
 });
 
@@ -146,7 +145,7 @@ app.put("/users/:userId", passport.authenticate('jwt', { session: false }), asyn
 });
     
 
-app.get("/users/:userId/favorites", (req, res) => {
+app.get("/users/:userId/favorites", passport.authenticate('jwt', { session: false }), async (req, res) => {
 	res.send(
 		"Successful GET request returning data on a single user's favorites."
 	);
