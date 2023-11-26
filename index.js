@@ -109,11 +109,8 @@ app.get("/directors/:name", passport.authenticate('jwt', { session: false }), as
 app.post("/users/new", async (req, res) => {
     try {
         const newUser = req.body;
-
-        // Hash the password before saving it
         const hashedPassword = await bcrypt.hash(newUser.password, 10);
         newUser.password = hashedPassword;
-
         const user = await Users.create(newUser);
         return res.status(201).json(user);
     } catch (error) {
@@ -129,14 +126,11 @@ app.get("/users/:userId", passport.authenticate('jwt', { session: false }), asyn
 app.put("/users/:userId", passport.authenticate('jwt', { session: false }), async (req, res) => {
         try {
             const userId = req.params.userId;
-            const updatedInfo = req.body;
-    
-            const updatedUser = await Users.findByIdAndUpdate(userId, updatedInfo, { new: true });
-    
+            const updatedInfo = req.body;    
+            const updatedUser = await Users.findByIdAndUpdate(userId, updatedInfo, { new: true });    
             if (!updatedUser) {
                 return res.status(404).send("User not found");
-            }
-    
+            }    
             return res.status(200).json(updatedUser);
         } catch (error) {
             console.error(error);
