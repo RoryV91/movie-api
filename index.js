@@ -17,6 +17,8 @@ const Directors = Models.Director;
 const Genres = Models.Genre;
 const Actors = Models.Actor;
 
+// PORT
+const port = process.env.PORT || 9999;
 
 // MIDDLEWARE
 app.use(morgan("common"));
@@ -216,6 +218,6 @@ app.use((err, req, res, next) => {
 	res.status(500).send("Something broke!");
 });
 
-app.listen(8080, () => {
-	console.log("Your app is listening on port 8080.");
+app.listen(port, () => {
+	console.log(`Your app is listening on port ${port}.`);
 });
