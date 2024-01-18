@@ -28,7 +28,7 @@ app.use(morgan("common"));
 app.use(express.static("public"));
 app.use(bodyParser.json());
 
-mongoose.connect("mongodb://localhost:27017/myFlix", {
+mongoose.connect("mongodb://localhost:27017/myFlixAPI", {
 	useNewUrlParser: true,
 	useUnifiedTopology: true,
 });
@@ -45,7 +45,7 @@ require('./passport');
 // ROUTES
 auth(app);
 
-app.get("/", passport.authenticate('jwt', { session: false }), async (req, res) => {
+app.get("/", async (req, res) => {
 	res.send("This is the root route for the app.");
 });
 
