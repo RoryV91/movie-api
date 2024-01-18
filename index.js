@@ -49,7 +49,7 @@ app.get("/", async (req, res) => {
 	res.send("This is the root route for the app.");
 });
 
-app.get("/movies", passport.authenticate('jwt', { session: false }), async (req, res) => {
+app.get("/movies", async (req, res) => {
 	Movies.find()
 		.then((movies) => {
 			res.json(movies);
