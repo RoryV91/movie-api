@@ -115,25 +115,35 @@
                 <td>GET</td>
                 <td>Return data about a director (bio, birth year, death year) by name.</td>
                 <td>None.</td>
-                <td>A JSON Object containing data for a single director. Note date format issue. Example: <br>
+                <td>A JSON Object containing data for a single director. Example: <br>
                     <pre>
     {
         "_id": {
-          "$oid": "6541da3b6abdf06a6f6bbd52"
+            "$oid": "6541da3b6abdf06a6f6bbd57"
         },
-        "name": "Jonathan Demme",
-        "bio": "Robert Jonathan Demme was an American director, producer, and screenwriter.",
+        "name": "Nicholas Winding Refn",
+        "bio": "Nicolas Winding Refn is a Danish film director, screenwriter and producer.",
         "birth": {
-          "$date": {
-            "$numberLong": "-816022800000"
-          }
+            "$date": "1970-01-01T00:00:00.000Z"
         },
-        "death": {
-          "$date": "2017-04-26T07:00:00.000Z"
-        }
+        "death": null
     }
                 </pre>
                 </td>
+            </tr>
+            <tr>
+                <td>/login</td>
+                <td>POST</td>
+                <td>Submit form to allow users to login to their account.</td>
+                <td>A JSON Object containing data input by the user: Example: <br>
+                    <pre>
+    {
+        "username": "User5",
+        "password": "Password5"
+    }
+                    </pre>
+                </td>
+                <td>Text letting new user know their account has been successfully created.</td>
             </tr>
             <tr>
                 <td>/users/new</td>
@@ -142,9 +152,10 @@
                 <td>A JSON Object containing data input by the user: Example: <br>
                     <pre>
     {
-        email: 'user@email.com',
-        display: 'User_Name',
-        DOB: '2001-06-22',
+        "username": "User5",
+        "password": "Password5",
+        "email": "user5@example.com",
+        "dob": "YYYY-MM-DD" 
     }
                     </pre>
                 </td>
