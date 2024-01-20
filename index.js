@@ -95,6 +95,49 @@ app.get("/movies/:title", passport.authenticate('jwt', { session: false }), asyn
 		});
 });
 
+// CREATE MOVIE
+app.post("/movies/new", passport.authenticate('jwt', { session: false }), async (req, res) => {
+    const movieData = req.body;
+
+    if (typeof movieData.title !== 'string' || movieData.title.trim() === '') {
+        return res.status(400).send("Invalid movie title.");
+    }
+
+    if (typeof movieData.description !== 'string' || movieData.description.trim() === '') {
+        return res.status(400).send("Invalid movie description.");
+    }
+
+    if (movieData.imageurl && typeof movieData.imageurl !== 'string') {
+        return res.status(400).send("Invalid movie image URL.");
+    }
+
+    if (movieData.featured && typeof movieData.featured !== 'boolean') {
+        return res.status(400).send("Invalid movie featured flag.");
+    }
+
+    if (movieData.release && isNaN(Date.parse(movieData.release))) {
+        return res.status(400).send("Invalid movie release date.");
+    }
+
+    if (movieData.actor_ids && !Array.isArray(movieData.actor_ids)) {
+        return res.status(400).send("Invalid movie actor IDs.");
+    }
+    if (movieData.director_ids && !Array.isArray(movieData.director_ids)) {
+        return res.status(400).send("Invalid movie director IDs.");
+    }
+    if (movieData.genre_ids && !Array.isArray(movieData.genre_ids)) {
+        return res.status(400).send("Invalid movie genre IDs.");
+    }
+
+    const existingMovie = await Movies.findOne({ title: { $regex: new RegExp(`^${movieData.title}$`, 'i') } });
+    if (existingMovie) {
+        return res.status(400).send("A movie with this title already exists.");
+    }
+
+    const newMovie = await Movies.create(movieData);
+    return res.status(201).json(newMovie);
+});
+
 // GET GENRE BY NAME
 app.get("/genres/:name", passport.authenticate('jwt', { session: false }), async (req, res) => {
     const genreName = req.params.name;
@@ -115,6 +158,56 @@ app.get("/genres/:name", passport.authenticate('jwt', { session: false }), async
             console.error(err);
             res.status(500).send("Internal Server Error");
         });
+});
+
+// CREATE GENRE
+app.post("/genres/new", passport.authenticate('jwt', { session: false }), async (req, res) => {
+    const genreData = req.body;
+
+    if (typeof genreData.name !== 'string' || genreData.name.trim() === '') {
+        return res.status(400).send("Invalid genre name.");
+    }
+
+    if (typeof genreData.description !== 'string' || genreData.description.trim() === '') {
+        return res.status(400).send("Invalid genre description.");
+    }
+
+    try {
+        const existingGenre = await Genres.findOne({ name: { $regex: new RegExp(`^${genreData.name}$`, 'i') } });
+        if (existingGenre) {
+            return res.status(400).send("A genre with this name already exists.");
+        }
+        const newGenre = await Genres.create(genreData);
+        return res.status(201).json(newGenre);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send("Error creating genre");
+    }
+});
+
+// UPDATE GENRE BY ID
+app.put("/genres/:genreId", passport.authenticate('jwt', { session: false }), async (req, res) => {
+    const genreId = req.params.genreId;
+    const updatedInfo = req.body;
+
+    if (typeof updatedInfo.name !== 'string' || updatedInfo.name.trim() === '') {
+        return res.status(400).send("Invalid genre name.");
+    }
+
+    if (typeof updatedInfo.description !== 'string' || updatedInfo.description.trim() === '') {
+        return res.status(400).send("Invalid genre description.");
+    }
+
+    try {
+        const updatedGenre = await Genres.findByIdAndUpdate(genreId, updatedInfo, { new: true });
+        if (!updatedGenre) {
+            return res.status(404).send("Genre not found");
+        }
+        return res.status(200).json(updatedGenre);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send("Error updating genre");
+    }
 });
 
 // GET DIRECTOR BY NAME
@@ -139,6 +232,76 @@ app.get("/directors/:name", passport.authenticate('jwt', { session: false }), as
         });
 });
 
+// CREATE DIRECTOR
+app.post("/directors/new", passport.authenticate('jwt', { session: false }), async (req, res) => {
+    try {
+        const newDirector = req.body;
+
+        if (typeof newDirector.name !== 'string' || newDirector.name.trim() === '') {
+            return res.status(400).send("Invalid director name.");
+        }
+
+        if (newDirector.bio && typeof newDirector.bio !== 'string' || newDirector.bio.trim() === '') {
+            return res.status(400).send("Invalid director bio.");
+        }
+
+        if (newDirector.birth && isNaN(Date.parse(newDirector.birth))) {
+            return res.status(400).send("Invalid director birth date.");
+        }
+
+        if (newDirector.death && isNaN(Date.parse(newDirector.death))) {
+            return res.status(400).send("Invalid director death date.");
+        }
+
+        const existingDirector = await Directors.findOne({ name: { $regex: new RegExp(`^${newDirector.name}$`, 'i') } });
+
+        if (existingDirector) {
+            return res.status(400).send("A director with this name already exists.");
+        }
+
+        const director = await Directors.create(newDirector);
+        return res.status(201).json(director);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send("Error creating director");
+    }
+});
+
+// UPDATE DIRECTOR BY ID
+app.put("/directors/:id", passport.authenticate('jwt', { session: false }), async (req, res) => {
+    try {
+        const directorId = req.params.id;
+        const directorData = req.body;
+
+        if (directorData.name && (typeof directorData.name !== 'string' || directorData.name.trim() === '')) {
+            return res.status(400).send("Invalid director name.");
+        }
+
+        if (directorData.bio && typeof directorData.bio !== 'string') {
+            return res.status(400).send("Invalid director bio.");
+        }
+
+        if (directorData.birth && isNaN(Date.parse(directorData.birth))) {
+            return res.status(400).send("Invalid director birth date.");
+        }
+
+        if (directorData.death && isNaN(Date.parse(directorData.death))) {
+            return res.status(400).send("Invalid director death date.");
+        }
+
+        const director = await Directors.findByIdAndUpdate(directorId, directorData, { new: true });
+
+        if (!director) {
+            return res.status(404).send("Director not found.");
+        }
+
+        return res.status(200).json(director);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send("Error updating director");
+    }
+});
+
 // CREATE USER
 app.post("/users/new", async (req, res) => {
     try {
@@ -148,10 +311,10 @@ app.post("/users/new", async (req, res) => {
             return res.status(400).send("Invalid username.");
         }
 
-        const existingUser = await Users.findOne({ username: newUser.username });
+        const existingUser = await Users.findOne({ username: { $regex: new RegExp(`^${newUser.username}$`, 'i') } });
 
         if (existingUser) {
-            return res.status(400).send("A user with this username already exists.");
+            return res.status(400).send("This username is already taken.");
         }
 
         const hashedPassword = await bcrypt.hash(newUser.password, 10);
@@ -281,7 +444,7 @@ app.delete("/users/:userId/delete", passport.authenticate('jwt', { session: fals
     }
 });
 
-//MIDDLEWARE
+// MIDDLEWARE
 app.use((err, req, res, next) => {
 	console.error(err.stack);
 	res.status(500).send("Something broke!");
