@@ -8,6 +8,15 @@ const app = express();
 const { ObjectId } = require('mongoose').Types;
 const bcrypt = require('bcrypt'); 
 const auth = require('./auth');
+const https = require('https');
+const fs = require('fs');
+const keyPath = require('./config').keyPath;
+const certPath = require('./config').certPath;
+const options = {
+    key: fs.readFileSync(keyPath),
+    cert: fs.readFileSync(certPath)
+};
+const server = https.createServer(options, app);
 
 // MODELS
 const Models = require("./models.js");
@@ -218,6 +227,6 @@ app.use((err, req, res, next) => {
 	res.status(500).send("Something broke!");
 });
 
-app.listen(port, () => {
-	console.log(`Your app is listening on port ${port}.`);
-});
+server.listen(port, () => {
+    console.log(`Your app is listening on port ${port}.`);
+  });
