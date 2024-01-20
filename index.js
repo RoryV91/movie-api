@@ -71,6 +71,11 @@ app.get("/movies", async (req, res) => {
 
 app.get("/movies/:title", passport.authenticate('jwt', { session: false }), async (req, res) => {
 	const movieTitle = req.params.title;
+
+    if (typeof movieTitle !== 'string' || movieTitle.trim() === '') {
+        return res.status(400).send("Invalid movie title.");
+    }
+
 	Movies.findOne({ title: movieTitle })
 		.then((movie) => {
 			if (!movie) {
@@ -87,6 +92,11 @@ app.get("/movies/:title", passport.authenticate('jwt', { session: false }), asyn
 
 app.get("/genres/:name", passport.authenticate('jwt', { session: false }), async (req, res) => {
     const genreName = req.params.name;
+
+    if (typeof genreName !== 'string' || genreName.trim() === '') {
+        return res.status(400).send("Invalid genre name.");
+    }
+
     Genres.findOne({ name: genreName })
         .then((genre) => {
             if (!genre) {
@@ -103,6 +113,11 @@ app.get("/genres/:name", passport.authenticate('jwt', { session: false }), async
 
 app.get("/directors/:name", passport.authenticate('jwt', { session: false }), async (req, res) => {
     const directorName = req.params.name;
+
+    if (typeof directorName !== 'string' || directorName.trim() === '') {
+        return res.status(400).send("Invalid director name.");
+    }
+
     Directors.findOne({ name: directorName })
         .then((director) => {
             if (!director) {
