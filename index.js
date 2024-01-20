@@ -52,12 +52,16 @@ app.use((req, res, next) => {
 require('./passport');
 
 // ROUTES
+
+// AUTH
 auth(app);
 
+// ROOT
 app.get("/", async (req, res) => {
 	res.send("This is the root route for the app.");
 });
 
+// GET ALL MOVIES
 app.get("/movies", async (req, res) => {
 	Movies.find()
 		.then((movies) => {
@@ -69,6 +73,7 @@ app.get("/movies", async (req, res) => {
 		});
 });
 
+// GET MOVIE BY TITLE
 app.get("/movies/:title", passport.authenticate('jwt', { session: false }), async (req, res) => {
 	const movieTitle = req.params.title;
 
@@ -90,6 +95,7 @@ app.get("/movies/:title", passport.authenticate('jwt', { session: false }), asyn
 		});
 });
 
+// GET GENRE BY NAME
 app.get("/genres/:name", passport.authenticate('jwt', { session: false }), async (req, res) => {
     const genreName = req.params.name;
 
@@ -111,6 +117,7 @@ app.get("/genres/:name", passport.authenticate('jwt', { session: false }), async
         });
 });
 
+// GET DIRECTOR BY NAME
 app.get("/directors/:name", passport.authenticate('jwt', { session: false }), async (req, res) => {
     const directorName = req.params.name;
 
@@ -132,6 +139,7 @@ app.get("/directors/:name", passport.authenticate('jwt', { session: false }), as
         });
 });
 
+// CREATE USER
 app.post("/users/new", async (req, res) => {
     try {
         const newUser = req.body;
@@ -156,10 +164,12 @@ app.post("/users/new", async (req, res) => {
     }
 });
 
+// GET USER BY ID
 app.get("/users/:userId", passport.authenticate('jwt', { session: false }), async (req, res) => {
 	res.send("Successful GET request returning data on a single user.");
 });
 
+// UPDATE USER BY ID
 app.put("/users/:userId", passport.authenticate('jwt', { session: false }), async (req, res) => {
     try {
         const userId = req.params.userId;
@@ -182,13 +192,14 @@ app.put("/users/:userId", passport.authenticate('jwt', { session: false }), asyn
     }
 });
     
-
+// GET USER FAVORITES BY ID
 app.get("/users/:userId/favorites", passport.authenticate('jwt', { session: false }), async (req, res) => {
 	res.send(
 		"Successful GET request returning data on a single user's favorites."
 	);
 });
 
+// ADD MOVIE TO USER FAVORITES
 app.post("/users/:userId/favorites/add", passport.authenticate('jwt', { session: false }), async (req, res) => {
     try {
         const userId = req.params.userId;
@@ -219,6 +230,7 @@ app.post("/users/:userId/favorites/add", passport.authenticate('jwt', { session:
     }
 });
 
+// REMOVE MOVIE FROM USER FAVORITES
 app.delete("/users/:userId/favorites/remove", passport.authenticate('jwt', { session: false }), async (req, res) => {
     try {
         const userId = req.params.userId;
@@ -249,6 +261,7 @@ app.delete("/users/:userId/favorites/remove", passport.authenticate('jwt', { ses
     }
 });
 
+// DELETE USER BY ID
 app.delete("/users/:userId/delete", passport.authenticate('jwt', { session: false }), async (req, res) => {
     try {
         const userId = req.params.userId;
@@ -268,12 +281,13 @@ app.delete("/users/:userId/delete", passport.authenticate('jwt', { session: fals
     }
 });
 
-
+//MIDDLEWARE
 app.use((err, req, res, next) => {
 	console.error(err.stack);
 	res.status(500).send("Something broke!");
 });
 
+// SERVER LISTENING
 server.listen(port, () => {
     console.log(`Your app is listening on port ${port}.`);
-  });
+});
