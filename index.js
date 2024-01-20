@@ -138,6 +138,49 @@ app.post("/movies/new", passport.authenticate('jwt', { session: false }), async 
     return res.status(201).json(newMovie);
 });
 
+// UPDATE MOVIE
+app.put("/movies/:id", passport.authenticate('jwt', { session: false }), async (req, res) => {
+    try {
+        const movieId = req.params.id;
+        const movieData = req.body;
+
+        if (movieData.title && (typeof movieData.title !== 'string' || movieData.title.trim() === '')) {
+            return res.status(400).send("Invalid movie title.");
+        }
+
+        if (movieData.description && (typeof movieData.description !== 'string' || movieData.description.trim() === '')) {
+            return res.status(400).send("Invalid movie description.");
+        }
+
+        if (movieData.imageurl && typeof movieData.imageurl !== 'string') {
+            return res.status(400).send("Invalid movie image URL.");
+        }
+
+        if (movieData.featured && typeof movieData.featured !== 'boolean') {
+            return res.status(400).send("Invalid movie featured flag.");
+        }
+
+        if (movieData.release && isNaN(Date.parse(movieData.release))) {
+            return res.status(400).send("Invalid movie release date.");
+        }
+
+        if (movieData.actor_ids && !Array.isArray(movieData.actor_ids)) {
+            return res.status(400).send("Invalid movie actor IDs.");
+        }
+
+        const movie = await Movies.findByIdAndUpdate(movieId, movieData, { new: true });
+
+        if (!movie) {
+            return res.status(404).send("Movie not found.");
+        }
+
+        return res.status(200).json(movie);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send("Error updating movie");
+    }
+});
+
 // GET GENRE BY NAME
 app.get("/genres/:name", passport.authenticate('jwt', { session: false }), async (req, res) => {
     const genreName = req.params.name;
