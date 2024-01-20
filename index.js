@@ -120,6 +120,17 @@ app.get("/directors/:name", passport.authenticate('jwt', { session: false }), as
 app.post("/users/new", async (req, res) => {
     try {
         const newUser = req.body;
+
+        if (typeof newUser.username !== 'string' || newUser.username.length > 32) {
+            return res.status(400).send("Invalid username.");
+        }
+
+        const existingUser = await Users.findOne({ username: newUser.username });
+
+        if (existingUser) {
+            return res.status(400).send("A user with this username already exists.");
+        }
+
         const hashedPassword = await bcrypt.hash(newUser.password, 10);
         newUser.password = hashedPassword;
         const user = await Users.create(newUser);
@@ -135,18 +146,25 @@ app.get("/users/:userId", passport.authenticate('jwt', { session: false }), asyn
 });
 
 app.put("/users/:userId", passport.authenticate('jwt', { session: false }), async (req, res) => {
-        try {
-            const userId = req.params.userId;
-            const updatedInfo = req.body;    
-            const updatedUser = await Users.findByIdAndUpdate(userId, updatedInfo, { new: true });    
-            if (!updatedUser) {
-                return res.status(404).send("User not found");
-            }    
-            return res.status(200).json(updatedUser);
-        } catch (error) {
-            console.error(error);
-            return res.status(500).send("Error updating user");
+    try {
+        const userId = req.params.userId;
+        const updatedInfo = req.body;
+
+        if (req.user.id !== userId) {
+            return res.status(403).send("You can only update your own information.");
         }
+
+        const updatedUser = await Users.findByIdAndUpdate(userId, updatedInfo, { new: true });
+
+        if (!updatedUser) {
+            return res.status(404).send("User not found");
+        }
+
+        return res.status(200).json(updatedUser);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send("Error updating user");
+    }
 });
     
 
@@ -160,6 +178,11 @@ app.post("/users/:userId/favorites/add", passport.authenticate('jwt', { session:
     try {
         const userId = req.params.userId;
         const movieId = req.body.movieId;
+
+        if (req.user.id !== userId) {
+            return res.status(403).send("You can only manage your own favorites.");
+        }
+
         if (!ObjectId.isValid(movieId)) {
             return res.status(400).send("Invalid movieId");
         }
@@ -185,6 +208,11 @@ app.delete("/users/:userId/favorites/remove", passport.authenticate('jwt', { ses
     try {
         const userId = req.params.userId;
         const movieId = req.body.movieId;
+
+        if (req.user.id !== userId) {
+            return res.status(403).send("You can only manage your own favorites.");
+        }
+
         if (!ObjectId.isValid(movieId)) {
             return res.status(400).send("Invalid movieId");
         }
@@ -209,6 +237,11 @@ app.delete("/users/:userId/favorites/remove", passport.authenticate('jwt', { ses
 app.delete("/users/:userId/delete", passport.authenticate('jwt', { session: false }), async (req, res) => {
     try {
         const userId = req.params.userId;
+
+        if (req.user.id !== userId) {
+            return res.status(403).send("You can only delete your own account.");
+        }
+
         const deletedUser = await Users.findByIdAndDelete(userId);
         if (!deletedUser) {
             return res.status(404).send("User not found");
@@ -219,7 +252,6 @@ app.delete("/users/:userId/delete", passport.authenticate('jwt', { session: fals
         return res.status(500).send("Error deleting user");
     }
 });
-
 
 
 app.use((err, req, res, next) => {
