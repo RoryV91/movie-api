@@ -302,6 +302,94 @@ app.put("/directors/:id", passport.authenticate('jwt', { session: false }), asyn
     }
 });
 
+// GET ACTOR BY NAME
+app.get("/actors/:name", async (req, res) => {
+    try {
+        const actorName = req.params.name;
+
+        const actor = await Actors.findOne({ name: actorName });
+
+        if (!actor) {
+            return res.status(404).send("Actor not found.");
+        }
+
+        return res.status(200).json(actor);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send("Error getting actor");
+    }
+});
+
+// CREATE ACTOR
+app.post("/actors/new", passport.authenticate('jwt', { session: false }), async (req, res) => {
+    try {
+        const newActor = req.body;
+
+        if (typeof newActor.name !== 'string' || newActor.name.trim() === '') {
+            return res.status(400).send("Invalid actor name.");
+        }
+
+        if (newActor.bio && typeof newActor.bio !== 'string' || newActor.bio.trim() === '') {
+            return res.status(400).send("Invalid actor bio.");
+        }
+
+        if (newActor.birth && isNaN(Date.parse(newActor.birth))) {
+            return res.status(400).send("Invalid actor birth date.");
+        }
+
+        if (newActor.death && isNaN(Date.parse(newActor.death))) {
+            return res.status(400).send("Invalid actor death date.");
+        }
+
+        const existingActor = await Actors.findOne({ name: { $regex: new RegExp(`^${newActor.name}$`, 'i') } });
+
+        if (existingActor) {
+            return res.status(400).send("An actor with this name already exists.");
+        }
+
+        const actor = await Actors.create(newActor);
+        return res.status(201).json(actor);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send("Error creating actor");
+    }
+});
+
+// UPDATE ACTOR BY ID
+app.put("/actors/:id", passport.authenticate('jwt', { session: false }), async (req, res) => {
+    try {
+        const actorId = req.params.id;
+        const actorData = req.body;
+
+        if (actorData.name && (typeof actorData.name !== 'string' || actorData.name.trim() === '')) {
+            return res.status(400).send("Invalid actor name.");
+        }
+
+        if (actorData.bio && typeof actorData.bio !== 'string' || actorData.bio.trim() === '') {
+            return res.status(400).send("Invalid actor bio.");
+        }
+
+        if (actorData.birth && isNaN(Date.parse(actorData.birth))) {
+            return res.status(400).send("Invalid actor birth date.");
+        }
+
+        if (actorData.death && isNaN(Date.parse(actorData.death))) {
+            return res.status(400).send("Invalid actor death date.");
+        }
+
+        const actor = await Actors.findByIdAndUpdate(actorId, actorData, { new: true });
+
+        if (!actor) {
+            return res.status(404).send("Actor not found.");
+        }
+
+        return res.status(200).json(actor);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send("Error updating actor");
+    }
+});
+
 // CREATE USER
 app.post("/users/new", async (req, res) => {
     try {
