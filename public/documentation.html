@@ -1,68 +1,76 @@
 <!DOCTYPE html>
 <html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0" />
+		<title>Documentation</title>
+		<style>
+			body {
+				font-family: Arial, sans-serif;
+			}
 
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport"
-            content="width=device-width, initial-scale=1.0" />
-        <title>Documentation</title>
-        <style>
-            body {
-                font-family: Arial, sans-serif;
-            }
+			pre {
+				width: 300px;
+				overflow: auto;
+				text-wrap: wrap;
+			}
 
-            pre {
-                width: 300px;
-                overflow: auto;
-                text-wrap: wrap;
-            }
+			table {
+				font-family: Arial, sans-serif;
+				border-collapse: collapse;
+				width: 90vw;
+			}
 
-            table {
-                font-family: Arial, sans-serif;
-                border-collapse: collapse;
-                width: 90vw;
-            }
+			th,
+			td {
+				border: 1px solid #dddddd;
+				text-align: left;
+				padding: 8px;
+			}
 
-            th,
-            td {
-                border: 1px solid #dddddd;
-                text-align: left;
-                padding: 8px;
-            }
+			th {
+				background-color: #f2f2f2;
+			}
+		</style>
+	</head>
 
-            th {
-                background-color: #f2f2f2;
-            }
-        </style>
-    </head>
-
-    <body>
-        <h1>myFlix Movie API doc 📼</h1>
-        <p>A MERN-stack application with a REST API that interfaces with a database that stores data about different
-            movies.</p>
-        <table>
-            <tr>
-                <th>Endpoint</th>
-                <th>HTTP Method</th>
-                <th>Description</th>
-                <th>Request Body</th>
-                <th>Response Body</th>
-            </tr>
-            <tr>
-                <td>/movies</td>
-                <td>GET</td>
-                <td>Return a list of ALL movies to the user.</td>
-                <td>None.</td>
-                <td>A JSON Object containing data about all of the movies.</td>
-            </tr>
-            <tr>
-                <td>/movies/{title}</td>
-                <td>GET</td>
-                <td>Return data (description, genre, director, image URL, whether it’s featured or not) about a single
-                    movie by title to the user.</td>
-                <td>None.</td>
-                <td>A JSON Object containing data about a single movie. Example: <br>
-                    <pre>
+	<body>
+		<h1>myFlix Movie API doc 📼</h1>
+		<p>
+			A MERN-stack application with a REST API that interfaces with a database
+			that stores data about different movies.
+		</p>
+		<table>
+			<tr>
+				<th>Endpoint</th>
+				<th>HTTP Method</th>
+				<th>Description</th>
+				<th>Request Body</th>
+				<th>Response Body</th>
+			</tr>
+			<tr>
+				<th colspan="5">Movies</th>
+			</tr>
+			<tr>
+				<td>/movies</td>
+				<td>GET</td>
+				<td>Return a list of ALL movies to the user.</td>
+				<td>None.</td>
+				<td>A JSON Object containing data about all of the movies.</td>
+			</tr>
+			<tr>
+				<td>/movies/{title}</td>
+				<td>GET</td>
+				<td>
+					Return data (description, genre, director, image URL, whether it’s
+					featured or not) about a single movie by title to the user.
+				</td>
+				<td>None.</td>
+				<td>
+					A JSON Object containing data about a single movie. Example: <br />
+					<pre>
     {
         "_id": {
           "$oid": "6541dc686abdf06a6f6bbd80"
@@ -90,16 +98,208 @@
           }
         ]
     }
-                    </pre>
-                </td>
-            </tr>
-            <tr>
-                <td>/genres/{name}</td>
-                <td>GET</td>
-                <td>Return data about a genre by name.</td>
-                <td>None.</td>
-                <td>A JSON Object containing data about a single genre. Example: <br>
-                    <pre>
+          </pre>
+				</td>
+			</tr>
+			<tr>
+				<td>/movies</td>
+				<td>POST</td>
+				<td>Create a new movie.</td>
+				<td>
+					A JSON object containing data about a single movie. <br />
+					Note: User may not have all of the data about the movie they want to
+					add, so the request body only requires the title and description.
+					Example:
+					<pre>
+    {
+        "title": "Jurassic Park",
+        "description": "A pragmatic paleontologist touring an almost complete theme park on an island in Central America is tasked with protecting a couple of kids after a power failure causes the park's cloned dinosaurs to run loose.",
+        "imageurl": "jurassicpark.png",
+        "featured": true,
+        "actor_ids": [],
+        "release": null,
+        "director_ids": [],
+        "genre_ids": []
+    }
+          </pre>
+				</td>
+				<td>
+					A JSON Object containing data about a single movie. Example: <br />
+					<pre>
+    {
+        "_id": {
+          "$oid": "6541dc686abdf06a6f6bbd82"
+        },
+        "title": "Jurassic Park",
+        "description": "A pragmatic paleontologist touring an almost complete theme park on an island in Central America is tasked with protecting a couple of kids after a power failure causes the park's cloned dinosaurs to run loose.",
+        "imageurl": "jurassicpark.png",
+        "featured": true,
+        "actor_ids": [],
+        "release": null,
+        "director_ids": [],
+        "genre_ids": []
+    }
+          </pre>
+				</td>
+			</tr>
+			<tr>
+				<td>/movies/{id}</td>
+				<td>PUT</td>
+				<td>Update data about a movie by ID.</td>
+				<td>
+					A JSON Object containing data about a single movie. Example: <br />
+					<pre>
+    {
+        "title": "Blade Runner 2049",
+        "description": "Updated description",
+        "imageurl": "bladerunner2049.png",
+        "featured": true,
+        "actor_ids": [],
+        "release": null,
+        "director_ids": [],
+        "genre_ids": []
+    }
+          </pre>
+				</td>
+				<td>
+					A JSON Object containing updated data about a single movie. Example:
+					<br />
+					<pre>
+    {
+      "_id": {
+        "$oid": "6541dc686abdf06a6f6bbd80"
+      },
+      "description": "Updated description",
+      "imageurl": "bladerunner2049.png",
+      "featured": true,
+      "actor_ids": [],
+      "release": null,
+      "director_ids": [],
+      "genre_ids": []
+  }
+          </pre>
+				</td>
+			</tr>
+			<tr>
+				<td>/movies/{id}</td>
+				<td>DELETE</td>
+				<td>Delete a movie by ID.</td>
+				<td>None.</td>
+				<td>A success message if the movie was deleted successfully.</td>
+			</tr>
+			<tr>
+				<th colspan="5">Actors</th>
+			</tr>
+			<tr>
+				<td>/actors/{name}</td>
+				<td>GET</td>
+				<td>Return data about an actor by name.</td>
+				<td>None.</td>
+				<td>
+					A JSON Object containing data about a single actor. Example: <br />
+					<pre>
+    {
+        "_id": {
+            "$oid": "6541dfbd6abdf06a6f6bbd9a"
+        },
+        "name": "Ryan Gosling",
+        "bio": "Ryan Thomas Gosling is a Canadian actor.",
+        "birth": {
+            "$date": "1980-11-12T08:00:00.000Z"
+        },
+        "death": null
+    }
+            </pre
+					>
+				</td>
+			</tr>
+			<tr>
+				<td>/actors</td>
+				<td>POST</td>
+				<td>Create a new actor.</td>
+				<td>
+					A JSON Object containing data about a single actor. Example: <br />
+					<pre>
+    {
+        "name": "Ryan Gosling",
+        "bio": "Ryan Thomas Gosling is a Canadian actor.",
+        "birth": "1980-11-12T08:00:00.000Z",
+        "death": null
+    }
+            </pre
+					>
+				</td>
+				<td>
+					A JSON Object containing data about the created actor. Example: <br />
+					<pre>
+    {
+        "_id": {
+            "$oid": "6541dfbd6abdf06a6f6bbd9a"
+        },
+        "name": "Ryan Gosling",
+        "bio": "Ryan Thomas Gosling is a Canadian actor.",
+        "birth": {
+            "$date": "1980-11-12T08:00:00.000Z"
+        },
+        "death": null
+    }
+            </pre
+					>
+				</td>
+			</tr>
+			<tr>
+				<td>/actors/{id}</td>
+				<td>PUT</td>
+				<td>Update data about an actor by ID.</td>
+				<td>
+					A JSON Object containing data about a single actor. Example: <br />
+					<pre>
+    {
+        "name": "Ryan Gosling",
+        "bio": "Updated bio",
+        "birth": "1980-11-12T08:00:00.000Z",
+        "death": null
+    }
+            </pre
+					>
+				</td>
+				<td>
+					A JSON Object containing updated data about a single actor. Example:
+					<br />
+					<pre>
+    {
+        "_id": {
+            "$oid": "6541dfbd6abdf06a6f6bbd9a"
+        },
+        "name": "Ryan Gosling",
+        "bio": "Updated bio",
+        "birth": {
+            "$date": "1980-11-12T08:00:00.000Z"
+        },
+        "death": null
+    }
+            </pre
+					>
+				</td>
+			</tr>
+			<tr>
+				<td>/actors/{id}</td>
+				<td>DELETE</td>
+				<td>Delete an actor by ID.</td>
+				<td>None.</td>
+				<td>A success message if the actor was deleted successfully.</td>
+			</tr>
+			<tr>
+				<th colspan="5">Genres</th>
+			</tr>
+			<tr>
+				<td>/genres/{name}</td>
+				<td>GET</td>
+				<td>Return data about a genre by name.</td>
+				<td>None.</td>
+				<td>
+					A JSON Object containing data about a single genre. Example: <br />
+					<pre>
     {
         "_id": {
             "$oid": "6541da2b6abdf06a6f6bbd4b"
@@ -107,16 +307,82 @@
         "name": "Thriller",
         "description": "Thriller film, also known as suspense film or suspense thriller, is a broad film genre that involves excitement and suspense in the audience."
     }
-                    </pre>
-                </td>
-            </tr>
-            <tr>
-                <td>/directors/{name}</td>
-                <td>GET</td>
-                <td>Return data about a director (bio, birth year, death year) by name.</td>
-                <td>None.</td>
-                <td>A JSON Object containing data for a single director. Example: <br>
-                    <pre>
+          </pre>
+				</td>
+			</tr>
+			<tr>
+				<td>/genres</td>
+				<td>POST</td>
+				<td>Create a new genre.</td>
+				<td>
+					A JSON Object containing data about a single genre. Example: <br />
+					<pre>
+    {
+        "name": "New Genre",
+        "description": "Description of the new genre"
+    }
+          </pre>
+				</td>
+				<td>
+					A JSON Object containing data about the created genre. Example: <br />
+					<pre>
+    {
+        "_id": {
+            "$oid": "6541da2b6abdf06a6f6bbd4b"
+        },
+        "name": "New Genre",
+        "description": "Description of the new genre"
+    }
+          </pre>
+				</td>
+			</tr>
+			<tr>
+				<td>/genres/{id}</td>
+				<td>PUT</td>
+				<td>Update data about a genre by ID.</td>
+				<td>
+					A JSON Object containing data about a single genre. Example: <br />
+					<pre>
+    {
+        "name": "Updated Genre",
+        "description": "Updated description of the genre"
+    }
+          </pre>
+				</td>
+				<td>
+					A JSON Object containing updated data about a single genre. Example:
+					<br />
+					<pre>
+    {
+        "_id": {
+            "$oid": "6541da2b6abdf06a6f6bbd4b"
+        },
+        "name": "Updated Genre",
+        "description": "Updated description of the genre"
+    }
+          </pre>
+				</td>
+			</tr>
+			<tr>
+				<td>/genres/{id}</td>
+				<td>DELETE</td>
+				<td>Delete a genre by ID.</td>
+				<td>None.</td>
+				<td>A success message if the genre was deleted successfully.</td>
+			</tr>
+			<tr>
+				<th colspan="5">Directors</th>
+			</tr>
+			<tr>
+				<td>/directors/{name}</td>
+				<td>GET</td>
+				<td>
+					Return data about a director (bio, birth year, death year) by name.
+				</td>
+				<td>None.</td>
+				<td>
+					A JSON Object containing data for a single director. Example: <br />
+					<pre>
     {
         "_id": {
             "$oid": "6541da3b6abdf06a6f6bbd57"
@@ -128,67 +394,159 @@
         },
         "death": null
     }
-                </pre>
-                </td>
-            </tr>
-            <tr>
-                <td>/login</td>
-                <td>POST</td>
-                <td>Submit form to allow users to login to their account.</td>
-                <td>A JSON Object containing data input by the user: Example: <br>
-                    <pre>
+          </pre>
+				</td>
+			</tr>
+			<tr>
+				<td>/directors</td>
+				<td>POST</td>
+				<td>Create a new director.</td>
+				<td>
+					A JSON Object containing data about a single director. Example: <br />
+					<pre>
+    {
+        "name": "New Director",
+        "bio": "Bio of the new director",
+        "birth": "1970-01-01T00:00:00.000Z",
+        "death": null
+    }
+          </pre>
+				</td>
+				<td>
+					A JSON Object containing data about the created director. Example:
+					<br />
+					<pre>
+    {
+        "_id": {
+            "$oid": "6541da3b6abdf06a6f6bbd57"
+        },
+        "name": "New Director",
+        "bio": "Bio of the new director",
+        "birth": {
+          "$date": "1970-01-01T00:00:00.000Z"
+        },
+        "death": null
+    }
+          </pre>
+				</td>
+			</tr>
+			<tr>
+				<td>/directors/{id}</td>
+				<td>PUT</td>
+				<td>Update data about a director by ID.</td>
+				<td>
+					A JSON Object containing data about a single director. Example: <br />
+					<pre>
+    {
+        "name": "Updated Director",
+        "bio": "Updated bio of the director",
+        "birth": "1970-01-01T00:00:00.000Z",
+        "death": null
+    }
+          </pre>
+				</td>
+				<td>
+					A JSON Object containing updated data about a single director.
+					Example: <br />
+					<pre>
+    {
+        "_id": {
+            "$oid": "6541da3b6abdf06a6f6bbd57"
+        },
+        "name": "Updated Director",
+        "bio": "Updated bio of the director",
+        "birth": {
+          "$date": "1970-01-01T00:00:00.000Z"
+        },
+        "death": null
+    }
+          </pre>
+				</td>
+			</tr>
+			<tr>
+				<td>/directors/{id}</td>
+				<td>DELETE</td>
+				<td>Delete a director by ID.</td>
+				<td>None.</td>
+				<td>A success message if the director was deleted successfully.</td>
+			</tr>
+			<tr>
+				<th colspan="5">Users</th>
+			</tr>
+			<tr>
+				<td>/login</td>
+				<td>POST</td>
+				<td>Submit form to allow users to login to their account.</td>
+				<td>
+					A JSON Object containing data input by the user: Example: <br />
+					<pre>
     {
         "username": "User5",
         "password": "Password5"
     }
-                    </pre>
-                </td>
-                <td>Text letting new user know their account has been successfully created.</td>
-            </tr>
-            <tr>
-                <td>/users/new</td>
-                <td>POST</td>
-                <td>Submit form to allow new users to register.</td>
-                <td>A JSON Object containing data input by the user: Example: <br>
-                    <pre>
+          </pre>
+				</td>
+				<td>
+					Text letting new user know their account has been successfully
+					created.
+				</td>
+			</tr>
+			<tr>
+				<td>/users/new</td>
+				<td>POST</td>
+				<td>Submit form to allow new users to register.</td>
+				<td>
+					A JSON Object containing data input by the user: Example: <br />
+					<pre>
     {
         "username": "User5",
         "password": "Password5",
         "email": "user5@example.com",
         "dob": "YYYY-MM-DD" 
     }
-                    </pre>
-                </td>
-                <td>Text letting new user know their account has been successfully created.</td>
-            </tr>
-            <tr>
-                <td>/users/{userId}</td>
-                <td>GET</td>
-                <td>Return a form to allow users to update their user info.</td>
-                <td>None</td>
-                <td>Short form where users can change their email address, display name, or date of birth.</td>
-            </tr>
-            <tr>
-                <td>/users/{userId}</td>
-                <td>PUT</td>
-                <td>Allow users to update their user info.</td>
-                <td>A JSON Object containing data input by the user: Example: <br>
-                    <pre>
+          </pre>
+				</td>
+				<td>
+					Text letting new user know their account has been successfully
+					created.
+				</td>
+			</tr>
+			<tr>
+				<td>/users/{userId}</td>
+				<td>GET</td>
+				<td>Return a form to allow users to update their user info.</td>
+				<td>None</td>
+				<td>
+					Short form where users can change their email address, display name,
+					or date of birth.
+				</td>
+			</tr>
+			<tr>
+				<td>/users/{userId}</td>
+				<td>PUT</td>
+				<td>Allow users to update their user info.</td>
+				<td>
+					A JSON Object containing data input by the user: Example: <br />
+					<pre>
     {
         email: 'user@newemail.com',
         display: 'New_User_Name'
     }
-                    </pre>
-                </td>
-                <td>Text letting the user know that changes to their user info were made successfully.</td>
-            </tr>
-            <tr>
-                <td>/users/{userId}/favorites</td>
-                <td>GET</td>
-                <td>Return a list of the user's favorite movies. </td>
-                <td>None.</td>
-                <td>A JSON Object containing a user's favorites. Example:
-                    <pre>
+          </pre>
+				</td>
+				<td>
+					Text letting the user know that changes to their user info were made
+					successfully.
+				</td>
+			</tr>
+			<tr>
+				<td>/users/{userId}/favorites</td>
+				<td>GET</td>
+				<td>Return a list of the user's favorite movies.</td>
+				<td>None.</td>
+				<td>
+					A JSON Object containing a user's favorites. Example:
+					<pre>
     {
         "user_movies": [
             {
@@ -199,46 +557,45 @@
             }
         ]
     }
-                    </pre>
-                </td>
-            </tr>
-            <tr>
-                <td>/users/{userId}/favorites/add</td>
-                <td>POST</td>
-                <td>Allow users to add a movie to their list of favorites.</td>
-                <td>A JSON object containing data about a single movie. <br>
-                    Note: User may not have all of the data about the movie they want to add, so the request body only requires the title and description. Example:
-                        <pre>
+          </pre>
+				</td>
+			</tr>
+			<tr>
+				<td>/users/{userId}/favorites/add</td>
+				<td>POST</td>
+				<td>Allow users to add a movie to their list of favorites.</td>
+				<td>
+					A JSON object containing a single movie id. <br />
+					Exaample:
+					<pre>
     {
-        "title": "Jurassic Park",
-        "description": "A pragmatic paleontologist touring an almost complete theme park on an island in Central America is tasked with protecting a couple of kids after a power failure causes the park's cloned dinosaurs to run loose.",
-        "imageurl": "jurassicpark.png",
-        "featured": true,
-        "actor_ids": [],
-        "release": null,
-        "director_ids": [],
-        "genre_ids": []
+        "movie_id": "6541dc686abdf06a6f6bbd80"
     }
-                        </pre>
-                </td>
-                <td>Text letting user know movie was added to favorites</td>
-            </tr>
-            <tr>
-                <td>/users/{userId}/favorites/remove</td>
-                <td>DELETE</td>
-                <td>Allow users to remove a movie from their list of favorites.</td>
-                <td>None.</td>
-                <td>Text including message letting user know deletion was successful, and link back to their favorites
-                    page.</td>
-            </tr>
-            <tr>
-                <td>/users/{userId}/delete</td>
-                <td>DELETE</td>
-                <td>Allow existing users to deregister.</td>
-                <td>None.</td>
-                <td>Text including message letting user know deletion was successful, and link back to home page.</td>
-            </tr>
-        </table>
-    </body>
-
+            </pre
+					>
+				</td>
+				<td>Text letting user know movie was added to favorites</td>
+			</tr>
+			<tr>
+				<td>/users/{userId}/favorites/remove</td>
+				<td>DELETE</td>
+				<td>Allow users to remove a movie from their list of favorites.</td>
+				<td>None.</td>
+				<td>
+					Text including message letting user know deletion was successful, and
+					link back to their favorites page.
+				</td>
+			</tr>
+			<tr>
+				<td>/users/{userId}/delete</td>
+				<td>DELETE</td>
+				<td>Allow existing users to deregister.</td>
+				<td>None.</td>
+				<td>
+					Text including message letting user know deletion was successful, and
+					link back to home page.
+				</td>
+			</tr>
+		</table>
+	</body>
 </html>
