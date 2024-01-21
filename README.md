@@ -50,7 +50,7 @@ module.exports = {
 ```
 ### Documentation
 
-For the complete list of endpoints and detailed descriptions of requests and responses, please refer to the [Documentation](http://myflixapi.vanblaricom.dev:9999/documentation.html).
+For the complete list of endpoints and detailed descriptions of requests and responses, please refer to the [Documentation](https://myflixapi.vanblaricom.dev:9999/documentation.html).
 
 ## License
 
