@@ -232,6 +232,17 @@ app.delete(
 	}
 );
 
+// GET ALL GENRES
+app.get("/genres", async (req, res) => {
+    try {
+        const genres = await Genres.find();
+        return res.status(200).json(genres);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send("Error getting genres");
+    }
+});
+
 // GET GENRE BY NAME
 app.get(
 	"/genres/:name",
@@ -352,6 +363,17 @@ app.delete(
 		}
 	}
 );
+
+// GET ALL DIRECTORS
+app.get("/directors", async (req, res) => {
+    try {
+        const directors = await Directors.find();
+        return res.status(200).json(directors);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send("Error getting directors");
+    }
+});
 
 // GET DIRECTOR BY NAME
 app.get(
@@ -497,6 +519,17 @@ app.delete(
 	}
 );
 
+// GET ALL ACTORS
+app.get("/actors", async (req, res) => {
+    try {
+        const actors = await Actors.find();
+        return res.status(200).json(actors);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send("Error getting actors");
+    }
+});
+
 // GET ACTOR BY NAME
 app.get("/actors/:name", async (req, res) => {
 	try {
@@ -627,6 +660,17 @@ app.delete(
 		}
 	}
 );
+
+// GET ALL USERS
+app.get("/users", passport.authenticate('jwt', { session: false }), async (req, res) => {
+    try {
+        const users = await Users.find();
+        return res.status(200).json(users);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send("Error getting users");
+    }
+});
 
 // CREATE USER
 app.post("/users/new", async (req, res) => {
