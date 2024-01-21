@@ -4,12 +4,13 @@
 		<meta charset="UTF-8" />
 		<meta
 			name="viewport"
-			content="width=device-width, initial-scale=1.0" />
+			content="width=device-width, initial-scale=1.0"
+		/>
 		<title>Documentation 📓</title>
 		<style>
 			body {
 				font-family: Arial, sans-serif;
-        background-color: #a0bfee;
+				background-color: #a0bfee;
 			}
 
 			pre {
@@ -27,15 +28,30 @@
 			th,
 			td {
 				border: 5px solid #022e52;
-				
+
 				padding: 8px;
 			}
-      td {
-        text-align: left;
-      }
+
+			td {
+				text-align: left;
+			}
+
 			th {
 				background-color: #458cf7;
-        text-align: center;
+				text-align: center;
+			}
+			.header {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+			}
+
+			.title {
+				text-align: center;
+			}
+
+			.linkTop {
+				text-align: right;
 			}
 		</style>
 	</head>
@@ -46,6 +62,15 @@
 			A MERN-stack application with a REST API that interfaces with a database
 			that stores data about different movies.
 		</p>
+		<h2>Table of Contents</h2>
+		<ul>
+			<li><a href="#movies">Movies</a></li>
+			<li><a href="#genres">Genres</a></li>
+			<li><a href="#actors">Actors</a></li>
+			<li><a href="#directors">Directors</a></li>
+			<li><a href="#users">Users</a></li>
+			<!-- Add more links as needed -->
+		</ul>
 		<table>
 			<tr>
 				<th>Endpoint 🔚</th>
@@ -55,7 +80,15 @@
 				<th>Response Body 📩</th>
 			</tr>
 			<tr>
-				<th colspan="5">Movies 📼</th>
+				<th
+					colspan="5"
+					id="movies"
+				>
+					<div class="header">
+						<div class="title">Movies 📼</div>
+						<div class="linkTop"><a href="#top">Back to Top</a></div>
+					</div>
+				</th>
 			</tr>
 			<tr>
 				<td>/movies</td>
@@ -63,6 +96,44 @@
 				<td>Return a list of ALL movies to the user.</td>
 				<td>None.</td>
 				<td>A JSON Object containing data about all of the movies.</td>
+			</tr>
+			<tr>
+				<td>/movies/{id}</td>
+				<td>GET</td>
+				<td>Get a movie by ID.</td>
+				<td>None.</td>
+				<td>
+					A JSON Object containing data about a single movie. Example: <br />
+					<pre>
+    {
+        "_id": {
+          "$oid": "6541dc686abdf06a6f6bbd80"
+        },
+        "title": "Blade Runner 2049",
+        "description": "Young Blade Runner K's discovery of a long-buried secret leads him to track down former Blade Runner Rick Deckard, who's been missing for thirty years.",
+        "imageurl": "bladerunner2049.png",
+        "featured": true,
+        "actor_ids": [
+          {
+            "$oid": "6541dfbd6abdf06a6f6bbd9a"
+          }
+        ],
+        "release": {
+          "$date": "2017-10-06T07:00:00.000Z"
+        },
+        "director_ids": [
+          {
+            "$oid": "6541da3b6abdf06a6f6bbd53"
+          }
+        ],
+        "genre_ids": [
+          {
+            "$oid": "6541da2b6abdf06a6f6bbd50"
+          }
+        ]
+    }
+          </pre>
+				</td>
 			</tr>
 			<tr>
 				<td>/movies/{title}</td>
@@ -191,8 +262,43 @@
 				<td>None.</td>
 				<td>A success message if the movie was deleted successfully.</td>
 			</tr>
+      <tr>
+        <th colspan="5" id="actors">
+            <div class="header">
+                <div class="title">Actors 🎭</div>
+                <div class="linkTop"><a href="#top">Back to Top</a></div>
+            </div>
+        </th>
+    </tr>
 			<tr>
-				<th colspan="5">Actors 🎭</th>
+				<td>/actors</td>
+				<td>GET</td>
+				<td>Return a list of ALL actors to the user.</td>
+				<td>None.</td>
+				<td>A JSON Object containing data about all of the actors.</td>
+			</tr>
+			<tr>
+				<td>/actors/{id}</td>
+				<td>GET</td>
+				<td>Get an actor by ID.</td>
+				<td>None.</td>
+				<td>
+					A JSON Object containing data about a single actor. Example: <br />
+					<pre>
+    {
+        "_id": {
+            "$oid": "6541dfbd6abdf06a6f6bbd9a"
+        },
+        "name": "Ryan Gosling",
+        "bio": "Ryan Thomas Gosling is a Canadian actor.",
+        "birth": {
+            "$date": "1980-11-12T08:00:00.000Z"
+        },
+        "death": null
+    }
+            </pre
+					>
+				</td>
 			</tr>
 			<tr>
 				<td>/actors/{name}</td>
@@ -293,8 +399,38 @@
 				<td>None.</td>
 				<td>A success message if the actor was deleted successfully.</td>
 			</tr>
+      <tr>
+        <th colspan="5" id="genres">
+            <div class="header">
+                <div class="title">Genres 🎞️</div>
+                <div class="linkTop"><a href="#top">Back to Top</a></div>
+            </div>
+        </th>
+      </tr>
 			<tr>
-				<th colspan="5">Genres 🎞️</th>
+				<td>/genres</td>
+				<td>GET</td>
+				<td>Return a list of ALL genres to the user.</td>
+				<td>None.</td>
+				<td>A JSON Object containing data about all of the genres.</td>
+			</tr>
+			<tr>
+				<td>/genres/{id}</td>
+				<td>GET</td>
+				<td>Get a genre by ID.</td>
+				<td>None.</td>
+				<td>
+					A JSON Object containing data about a single genre. Example: <br />
+					<pre>
+    {
+        "_id": {
+            "$oid": "6541da2b6abdf06a6f6bbd4b"
+        },
+        "name": "Thriller",
+        "description": "Thriller film, also known as suspense film or suspense thriller, is a broad film genre that involves excitement and suspense in the audience."
+    }
+          </pre>
+				</td>
 			</tr>
 			<tr>
 				<td>/genres/{name}</td>
@@ -374,8 +510,42 @@
 				<td>None.</td>
 				<td>A success message if the genre was deleted successfully.</td>
 			</tr>
+      <tr>
+        <th colspan="5" id="directors">
+            <div class="header">
+                <div class="title">Directors 🎬</div>
+                <div class="linkTop"><a href="#top">Back to Top</a></div>
+            </div>
+        </th>
+    </tr>
 			<tr>
-				<th colspan="5">Directors 🎬</th>
+				<td>/directors</td>
+				<td>GET</td>
+				<td>Return a list of ALL directors to the user.</td>
+				<td>None.</td>
+				<td>A JSON Object containing data about all of the directors.</td>
+			</tr>
+			<tr>
+				<td>/directors/:id</td>
+				<td>GET</td>
+				<td>Get a director by ID.</td>
+				<td>None.</td>
+				<td>
+					A JSON Object containing data for a single director. Example: <br />
+					<pre>
+    {
+        "_id": {
+            "$oid": "6541da3b6abdf06a6f6bbd57"
+        },
+        "name": "Nicholas Winding Refn",
+        "bio": "Nicolas Winding Refn is a Danish film director, screenwriter and producer.",
+        "birth": {
+            "$date": "1970-01-01T00:00:00.000Z"
+        },
+        "death": null
+    }
+          </pre>
+				</td>
 			</tr>
 			<tr>
 				<td>/directors/{name}</td>
@@ -474,8 +644,61 @@
 				<td>None.</td>
 				<td>A success message if the director was deleted successfully.</td>
 			</tr>
+      <tr>
+        <th colspan="5" id="users">
+            <div class="header">
+                <div class="title">Users 👥</div>
+                <div class="linkTop"><a href="#top">Back to Top</a></div>
+            </div>
+        </th>
+    </tr>
 			<tr>
-				<th colspan="5">Users</th>
+				<td>/users</td>
+				<td>GET</td>
+				<td>Return a list of ALL users to the user.</td>
+				<td>None.</td>
+				<td>A JSON Object containing data about all of the users.</td>
+			</tr>
+			<tr>
+				<td>/users/{id}</td>
+				<td>GET</td>
+				<td>Get a user by ID.</td>
+				<td>None.</td>
+				<td>
+					A JSON Object containing data about a single user. Example: <br />
+					<pre>
+    {
+        "_id": {
+            "$oid": "6541da3b6abdf06a6f6bbd57"
+        },
+        "name": "Updated Director",
+        "bio": "Updated bio of the director",
+        "birth": {
+          "$date": "1970-01-01T00:00:00.000Z"
+        },
+        "death": null
+    }
+    {
+        "_id": {
+            "$oid": "655eb2c46643c3c03236f1c3"
+        },
+        "username": "User01",
+        "password": "$2b$10$.yZGL6ITvG9ZlhoSaciEIed/aeqgFa0EYZ9TPfOcyTxP93JdPBSoW",
+        "email": "user01@differentexample.com",
+        "dob": {
+          "$date": "1990-01-01T00:00:00.000Z"
+        },
+        "user_movie_ids": [
+            {
+                "$oid": "6541dc686abdf06a6f6bbd80"
+            },
+            {
+                "$oid": "6541dc686abdf06a6f6bbd85"
+            }
+        ]
+     }
+          </pre>
+				</td>
 			</tr>
 			<tr>
 				<td>/login</td>
