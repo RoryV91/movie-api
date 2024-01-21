@@ -76,6 +76,24 @@ app.get("/movies", async (req, res) => {
 		});
 });
 
+// GET MOVIE BY ID
+app.get("/movies/:id", async (req, res) => {
+    const movieId = req.params.id;
+
+    try {
+        const movie = await Movies.findById(movieId);
+
+        if (!movie) {
+            return res.status(404).send("Movie not found.");
+        }
+
+        return res.status(200).json(movie);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send("Error getting movie");
+    }
+});
+
 // GET MOVIE BY TITLE
 app.get(
 	"/movies/:title",
@@ -243,6 +261,24 @@ app.get("/genres", async (req, res) => {
     }
 });
 
+// GET GENRE BY ID
+app.get("/genres/:id", async (req, res) => {
+    const genreId = req.params.id;
+
+    try {
+        const genre = await Genres.findById(genreId);
+
+        if (!genre) {
+            return res.status(404).send("Genre not found.");
+        }
+
+        return res.status(200).json(genre);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send("Error getting genre");
+    }
+});
+
 // GET GENRE BY NAME
 app.get(
 	"/genres/:name",
@@ -372,6 +408,24 @@ app.get("/directors", async (req, res) => {
     } catch (error) {
         console.error(error);
         return res.status(500).send("Error getting directors");
+    }
+});
+
+// GET DIRECTOR BY ID
+app.get("/directors/:id", async (req, res) => {
+    const directorId = req.params.id;
+
+    try {
+        const director = await Directors.findById(directorId);
+
+        if (!director) {
+            return res.status(404).send("Director not found.");
+        }
+
+        return res.status(200).json(director);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send("Error getting director");
     }
 });
 
@@ -527,6 +581,24 @@ app.get("/actors", async (req, res) => {
     } catch (error) {
         console.error(error);
         return res.status(500).send("Error getting actors");
+    }
+});
+
+// GET ACTOR BY ID
+app.get("/actors/:id", async (req, res) => {
+    const actorId = req.params.id;
+
+    try {
+        const actor = await Actors.findById(actorId);
+
+        if (!actor) {
+            return res.status(404).send("Actor not found.");
+        }
+
+        return res.status(200).json(actor);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send("Error getting actor");
     }
 });
 
