@@ -61,38 +61,46 @@ auth(app);
 
 // ROOT
 app.get("/", async (req, res) => {
-	res.send("This is the root route for the app.");
+	res.send("This is the root route for the app. It works.");
 });
 
 // GET ALL MOVIES
-app.get("/movies", async (req, res) => {
-	Movies.find()
-		.then((movies) => {
-			res.json(movies);
-		})
-		.catch((err) => {
-			console.error(err);
-			res.status(500).send("Internal Server Error");
-		});
-});
+app.get(
+	"/movies",
+	passport.authenticate("jwt", { session: false }),
+	async (req, res) => {
+		Movies.find()
+			.then((movies) => {
+				res.json(movies);
+			})
+			.catch((err) => {
+				console.error(err);
+				res.status(500).send("Internal Server Error");
+			});
+	}
+);
 
 // GET MOVIE BY ID
-app.get("/movies/:id", async (req, res) => {
-    const movieId = req.params.id;
+app.get(
+	"/movies/:id",
+	passport.authenticate("jwt", { session: false }),
+	async (req, res) => {
+		const movieId = req.params.id;
 
-    try {
-        const movie = await Movies.findById(movieId);
+		try {
+			const movie = await Movies.findById(movieId);
 
-        if (!movie) {
-            return res.status(404).send("Movie not found.");
-        }
+			if (!movie) {
+				return res.status(404).send("Movie not found.");
+			}
 
-        return res.status(200).json(movie);
-    } catch (error) {
-        console.error(error);
-        return res.status(500).send("Error getting movie");
-    }
-});
+			return res.status(200).json(movie);
+		} catch (error) {
+			console.error(error);
+			return res.status(500).send("Error getting movie");
+		}
+	}
+);
 
 // GET MOVIE BY TITLE
 app.get(
@@ -251,33 +259,41 @@ app.delete(
 );
 
 // GET ALL GENRES
-app.get("/genres", async (req, res) => {
-    try {
-        const genres = await Genres.find();
-        return res.status(200).json(genres);
-    } catch (error) {
-        console.error(error);
-        return res.status(500).send("Error getting genres");
-    }
-});
+app.get(
+	"/genres",
+	passport.authenticate("jwt", { session: false }),
+	async (req, res) => {
+		try {
+			const genres = await Genres.find();
+			return res.status(200).json(genres);
+		} catch (error) {
+			console.error(error);
+			return res.status(500).send("Error getting genres");
+		}
+	}
+);
 
 // GET GENRE BY ID
-app.get("/genres/:id", async (req, res) => {
-    const genreId = req.params.id;
+app.get(
+	"/genres/:id",
+	passport.authenticate("jwt", { session: false }),
+	async (req, res) => {
+		const genreId = req.params.id;
 
-    try {
-        const genre = await Genres.findById(genreId);
+		try {
+			const genre = await Genres.findById(genreId);
 
-        if (!genre) {
-            return res.status(404).send("Genre not found.");
-        }
+			if (!genre) {
+				return res.status(404).send("Genre not found.");
+			}
 
-        return res.status(200).json(genre);
-    } catch (error) {
-        console.error(error);
-        return res.status(500).send("Error getting genre");
-    }
-});
+			return res.status(200).json(genre);
+		} catch (error) {
+			console.error(error);
+			return res.status(500).send("Error getting genre");
+		}
+	}
+);
 
 // GET GENRE BY NAME
 app.get(
@@ -401,33 +417,41 @@ app.delete(
 );
 
 // GET ALL DIRECTORS
-app.get("/directors", async (req, res) => {
-    try {
-        const directors = await Directors.find();
-        return res.status(200).json(directors);
-    } catch (error) {
-        console.error(error);
-        return res.status(500).send("Error getting directors");
-    }
-});
+app.get(
+	"/directors",
+	passport.authenticate("jwt", { session: false }),
+	async (req, res) => {
+		try {
+			const directors = await Directors.find();
+			return res.status(200).json(directors);
+		} catch (error) {
+			console.error(error);
+			return res.status(500).send("Error getting directors");
+		}
+	}
+);
 
 // GET DIRECTOR BY ID
-app.get("/directors/:id", async (req, res) => {
-    const directorId = req.params.id;
+app.get(
+	"/directors/:id",
+	passport.authenticate("jwt", { session: false }),
+	async (req, res) => {
+		const directorId = req.params.id;
 
-    try {
-        const director = await Directors.findById(directorId);
+		try {
+			const director = await Directors.findById(directorId);
 
-        if (!director) {
-            return res.status(404).send("Director not found.");
-        }
+			if (!director) {
+				return res.status(404).send("Director not found.");
+			}
 
-        return res.status(200).json(director);
-    } catch (error) {
-        console.error(error);
-        return res.status(500).send("Error getting director");
-    }
-});
+			return res.status(200).json(director);
+		} catch (error) {
+			console.error(error);
+			return res.status(500).send("Error getting director");
+		}
+	}
+);
 
 // GET DIRECTOR BY NAME
 app.get(
@@ -574,51 +598,63 @@ app.delete(
 );
 
 // GET ALL ACTORS
-app.get("/actors", async (req, res) => {
-    try {
-        const actors = await Actors.find();
-        return res.status(200).json(actors);
-    } catch (error) {
-        console.error(error);
-        return res.status(500).send("Error getting actors");
-    }
-});
+app.get(
+	"/actors",
+	passport.authenticate("jwt", { session: false }),
+	async (req, res) => {
+		try {
+			const actors = await Actors.find();
+			return res.status(200).json(actors);
+		} catch (error) {
+			console.error(error);
+			return res.status(500).send("Error getting actors");
+		}
+	}
+);
 
 // GET ACTOR BY ID
-app.get("/actors/:id", async (req, res) => {
-    const actorId = req.params.id;
+app.get(
+	"/actors/:id",
+	passport.authenticate("jwt", { session: false }),
+	async (req, res) => {
+		const actorId = req.params.id;
 
-    try {
-        const actor = await Actors.findById(actorId);
+		try {
+			const actor = await Actors.findById(actorId);
 
-        if (!actor) {
-            return res.status(404).send("Actor not found.");
-        }
+			if (!actor) {
+				return res.status(404).send("Actor not found.");
+			}
 
-        return res.status(200).json(actor);
-    } catch (error) {
-        console.error(error);
-        return res.status(500).send("Error getting actor");
-    }
-});
+			return res.status(200).json(actor);
+		} catch (error) {
+			console.error(error);
+			return res.status(500).send("Error getting actor");
+		}
+	}
+);
 
 // GET ACTOR BY NAME
-app.get("/actors/:name", async (req, res) => {
-	try {
-		const actorName = req.params.name;
+app.get(
+	"/actors/:name",
+	passport.authenticate("jwt", { session: false }),
+	async (req, res) => {
+		try {
+			const actorName = req.params.name;
 
-		const actor = await Actors.findOne({ name: actorName });
+			const actor = await Actors.findOne({ name: actorName });
 
-		if (!actor) {
-			return res.status(404).send("Actor not found.");
+			if (!actor) {
+				return res.status(404).send("Actor not found.");
+			}
+
+			return res.status(200).json(actor);
+		} catch (error) {
+			console.error(error);
+			return res.status(500).send("Error getting actor");
 		}
-
-		return res.status(200).json(actor);
-	} catch (error) {
-		console.error(error);
-		return res.status(500).send("Error getting actor");
 	}
-});
+);
 
 // CREATE ACTOR
 app.post(
@@ -734,15 +770,19 @@ app.delete(
 );
 
 // GET ALL USERS
-app.get("/users", passport.authenticate('jwt', { session: false }), async (req, res) => {
-    try {
-        const users = await Users.find();
-        return res.status(200).json(users);
-    } catch (error) {
-        console.error(error);
-        return res.status(500).send("Error getting users");
-    }
-});
+app.get(
+	"/users",
+	passport.authenticate("jwt", { session: false }),
+	async (req, res) => {
+		try {
+			const users = await Users.find();
+			return res.status(200).json(users);
+		} catch (error) {
+			console.error(error);
+			return res.status(500).send("Error getting users");
+		}
+	}
+);
 
 // CREATE USER
 app.post("/users/new", async (req, res) => {
