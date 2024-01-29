@@ -16,6 +16,7 @@ let directorSchema = mongoose.Schema({
 	bio: { type: String, required: true },
 	birth: { type: Date, required: true },
 	death: Date,
+	imageurl: String,
 });
 
 let genreSchema = mongoose.Schema({
@@ -28,6 +29,7 @@ let actorSchema = mongoose.Schema({
     bio: { type: String, required: true },
     birth: { type: Date, required: true },
     death: Date,
+	imageurl: String,
 });
 
 let userSchema = mongoose.Schema({
