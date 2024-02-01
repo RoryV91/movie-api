@@ -826,31 +826,37 @@ app.put(
 	"/users/:userId",
 	passport.authenticate("jwt", { session: false }),
 	async (req, res) => {
-		try {
-			const userId = req.params.userId;
-			const updatedInfo = req.body;
-
-			if (req.user.id !== userId) {
-				return res
-					.status(403)
-					.send("You can only update your own information.");
-			}
-
-			const updatedUser = await Users.findByIdAndUpdate(userId, updatedInfo, {
-				new: true,
-			});
-
-			if (!updatedUser) {
-				return res.status(404).send("User not found");
-			}
-
-			return res.status(200).json(updatedUser);
-		} catch (error) {
-			console.error(error);
-			return res.status(500).send("Error updating user");
+	  try {
+		const userId = req.params.userId;
+		let updatedInfo = req.body;
+  
+		if (req.user.id !== userId) {
+		  return res
+			.status(403)
+			.send("You can only update your own information.");
 		}
+  
+		// If the password field is present in the request, hash the new password before saving it
+		if (updatedInfo.password) {
+		  const hashedPassword = await bcrypt.hash(updatedInfo.password, 10);
+		  updatedInfo.password = hashedPassword;
+		}
+  
+		const updatedUser = await Users.findByIdAndUpdate(userId, updatedInfo, {
+		  new: true,
+		});
+  
+		if (!updatedUser) {
+		  return res.status(404).send("User not found");
+		}
+  
+		return res.status(200).json(updatedUser);
+	  } catch (error) {
+		console.error(error);
+		return res.status(500).send("Error updating user");
+	  }
 	}
-);
+  );
 
 // GET USER FAVORITES BY ID
 app.get(
