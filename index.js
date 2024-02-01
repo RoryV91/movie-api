@@ -858,7 +858,7 @@ app.get(
 	passport.authenticate("jwt", { session: false }),
 	async (req, res) => {
 		try {
-			const user = await User.findById(req.params.userId);
+			const user = await Users.findById(req.params.userId);
 			if (!user) {
 				return res.status(404).send('User not found');
 			}
