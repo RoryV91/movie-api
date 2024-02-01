@@ -857,9 +857,15 @@ app.get(
 	"/users/:userId/favorites",
 	passport.authenticate("jwt", { session: false }),
 	async (req, res) => {
-		res.send(
-			"Successful GET request returning data on a single user's favorites."
-		);
+		try {
+			const user = await User.findById(req.params.userId);
+			if (!user) {
+				return res.status(404).send('User not found');
+			}
+			res.send(user.user_movie_ids);
+		} catch (error) {
+			res.status(500).send('Server error');
+		}
 	}
 );
 
