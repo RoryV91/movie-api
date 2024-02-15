@@ -768,7 +768,7 @@ app.delete(
 		const actorId = req.params.id;
 
 		try {
-			const actor = await Actors.findByIdAndRemove(actorId);
+			const actor = await Actors.findByIdAndDelete(actorId);
 
 			if (!actor) {
 				return res.status(404).send("Actor not found.");
