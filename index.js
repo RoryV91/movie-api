@@ -409,6 +409,12 @@ app.delete(
 				return res.status(404).send("Genre not found.");
 			}
 
+			// Remove the genre from all movies
+			await Movies.updateMany(
+				{ genre_ids: genreId }, 
+				{ $pull: { genre_ids: genreId } }
+			);
+
 			return res.status(200).send("Genre deleted successfully.");
 		} catch (error) {
 			console.error(error);
@@ -590,6 +596,12 @@ app.delete(
 				return res.status(404).send("Director not found.");
 			}
 
+			// Remove the director from all movies
+			await Movies.updateMany(
+				{ director_ids: directorId }, 
+				{ $pull: { director_ids: directorId } }
+			);
+
 			return res.status(200).send("Director deleted successfully.");
 		} catch (error) {
 			console.error(error);
@@ -761,6 +773,12 @@ app.delete(
 			if (!actor) {
 				return res.status(404).send("Actor not found.");
 			}
+
+			// Remove the actor from all movies
+			await Movies.updateMany(
+				{ actor_ids: actorId }, 
+				{ $pull: { actor_ids: actorId } }
+			);
 
 			return res.status(200).send("Actor deleted successfully.");
 		} catch (error) {
