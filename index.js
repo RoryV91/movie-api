@@ -403,7 +403,7 @@ app.delete(
 		const genreId = req.params.id;
 
 		try {
-			const genre = await Genres.findByIdAndRemove(genreId);
+			const genre = await Genres.findByIdAndDelete(genreId);
 
 			if (!genre) {
 				return res.status(404).send("Genre not found.");
@@ -590,7 +590,7 @@ app.delete(
 		const directorId = req.params.id;
 
 		try {
-			const director = await Directors.findByIdAndRemove(directorId);
+			const director = await Directors.findByIdAndDelete(directorId);
 
 			if (!director) {
 				return res.status(404).send("Director not found.");
