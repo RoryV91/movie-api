@@ -26,7 +26,10 @@ const auth = (router) => {
 					res.send(error);
 				}
 				const token = generateJWTToken(user.toJSON());
-				return res.json({ user, token });
+
+				const userWithoutPassword = { ...user._doc, password: undefined };
+
+				return res.json({ user: userWithoutPassword, token });
 			});
 		})(req, res);
 	});
