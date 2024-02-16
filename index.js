@@ -245,7 +245,7 @@ app.delete(
 		const movieId = req.params.id;
 
 		try {
-			const movie = await Movies.findByIdAndRemove(movieId);
+			const movie = await Movies.findByIdAndDelete(movieId);
 
 			if (!movie) {
 				return res.status(404).send("Movie not found.");
