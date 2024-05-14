@@ -829,14 +829,22 @@ app.post("/users/new", async (req, res) => {
 		return res.status(500).send("Error creating user");
 	}
 });
-
 // GET USER BY ID
 app.get(
-	"/users/:userId",
-	passport.authenticate("jwt", { session: false }),
-	async (req, res) => {
-		res.send("Successful GET request returning data on a single user.");
-	}
+    "/users/:userId",
+    passport.authenticate("jwt", { session: false }),
+    async (req, res) => {
+        try {
+            const user = await Users.findById(req.params.userId).select('-password');
+            if (!user) {
+                return res.status(404).send("User not found.");
+            }
+            return res.json(user);
+        } catch (error) {
+            console.error(error);
+            return res.status(500).send("Server error");
+        }
+    }
 );
 
 // UPDATE USER BY ID
